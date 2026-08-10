@@ -1,0 +1,99 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  /* Brand Theme Colors - Light Version */
+  --bg-color: #faf9f6; /* Off-white background */
+  --sidebar-bg: #ffffff; /* White sidebar */
+  --card-bg: rgba(255, 255, 255, 0.85); /* Translucent white card */
+  --text-primary: #0a271d; /* Dark Green text for contrast */
+  --text-secondary: #4a5568; /* Gray for secondary text */
+  
+  --accent-primary: #0a271d; /* Dark Green */
+  --accent-secondary: #d4af37; /* Gold */
+  --accent-tertiary: #b8860b; /* Dark Gold/Bronze */
+  
+  --success: #10b981;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+  
+  --border-color: rgba(10, 39, 29, 0.1);
+  --shadow-sm: 0 1px 2px 0 rgba(10, 39, 29, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(10, 39, 29, 0.05), 0 2px 4px -1px rgba(10, 39, 29, 0.03);
+  --shadow-lg: 0 10px 15px -3px rgba(10, 39, 29, 0.05), 0 4px 6px -2px rgba(10, 39, 29, 0.025);
+  --glass-shadow: 0 8px 32px 0 rgba(10, 39, 29, 0.05);
+  --glass-border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Layout Utilities */
+.app-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.page-content {
+  flex: 1;
+  padding: 2rem;
+  overflow-y: auto;
+}
+
+/* Glassmorphism Card */
+.glass-card {
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: var(--glass-border);
+  border-radius: 1rem;
+  box-shadow: var(--glass-shadow);
+  padding: 1.5rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.glass-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: rgba(212, 175, 55, 0.3); /* Gold tint on hover */
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+h1 { font-size: 1.75rem; color: var(--accent-primary); } /* Dark Green H1 */
+h2 { font-size: 1.25rem; color: var(--text-primary); }
+.text-muted { color: var(--text-secondary); font-size: 0.875rem; }
+
+/* Status Badges */
+.badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.badge-success { background-color: rgba(16, 185, 129, 0.1); color: var(--success); }
+.badge-warning { background-color: rgba(245, 158, 11, 0.1); color: var(--warning); }
+.badge-danger { background-color: rgba(239, 68, 68, 0.1); color: var(--danger); }

@@ -1,0 +1,248 @@
+.overlay {
+  position: fixed;
+  top: 0; right: 0; bottom: 0; left: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(2px);
+  z-index: 9998;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.overlayOpen {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.drawer {
+  position: fixed;
+  top: 0; right: 0; bottom: 0;
+  width: 100%;
+  max-width: 400px;
+  background: #FFFFF0;
+  z-index: 9999;
+  transform: translateX(100%);
+  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  display: flex;
+  flex-direction: column;
+  box-shadow: -5px 0 25px rgba(0,0,0,0.1);
+}
+
+.drawerOpen {
+  transform: translateX(0);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem;
+  border-bottom: 1px solid rgba(15, 42, 29, 0.1);
+}
+
+.header h2 {
+  font-family: var(--font-playfair);
+  color: var(--color-primary-dark);
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+.closeBtn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #666;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
+}
+
+.closeBtn:hover {
+  color: var(--color-primary-dark);
+}
+
+.itemsContainer {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.emptyCart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #888;
+  text-align: center;
+  gap: 1rem;
+}
+
+.cartItem {
+  display: flex;
+  gap: 1rem;
+  border-bottom: 1px solid rgba(15, 42, 29, 0.05);
+  padding-bottom: 1.5rem;
+}
+
+.itemImageWrapper {
+  width: 80px;
+  height: 80px;
+  border-radius: 8px;
+  background: var(--color-neutral-cream);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.itemImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.itemDetails {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.itemName {
+  font-weight: 700;
+  color: var(--color-primary-dark);
+  margin-bottom: 0.25rem;
+}
+
+.itemVariant {
+  font-size: 0.85rem;
+  color: #666;
+  margin-bottom: 0.5rem;
+}
+
+.itemPrice {
+  font-weight: 700;
+  color: var(--color-brand-gold);
+  margin-bottom: 0.5rem;
+}
+
+.itemControls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.qtyControl {
+  display: flex;
+  align-items: center;
+  border: 1px solid rgba(15, 42, 29, 0.2);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.qtyBtn {
+  background: transparent;
+  border: none;
+  padding: 0.2rem 0.5rem;
+  cursor: pointer;
+  color: var(--color-primary-dark);
+}
+
+.qtyBtn:hover {
+  background: rgba(15, 42, 29, 0.05);
+}
+
+.qtyDisplay {
+  padding: 0 0.5rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--color-primary-dark);
+}
+
+.removeBtn {
+  background: transparent;
+  border: none;
+  color: #ff4d4d;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.removeBtn:hover {
+  text-decoration: underline;
+}
+
+.footer {
+  padding: 1.5rem;
+  border-top: 1px solid rgba(15, 42, 29, 0.1);
+  background: white;
+}
+
+.addressSection {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.addressSection label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-primary-dark);
+  text-transform: uppercase;
+}
+
+.inputField {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid rgba(15, 42, 29, 0.2);
+  border-radius: 8px;
+  font-family: var(--font-manrope);
+  font-size: 0.95rem;
+  outline: none;
+}
+
+textarea.inputField {
+  resize: vertical;
+  min-height: 60px;
+}
+
+.inputField:focus {
+  border-color: var(--color-brand-gold);
+}
+
+.totalRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  font-family: var(--font-playfair);
+  font-size: 1.5rem;
+  color: var(--color-primary-dark);
+}
+
+.placeOrderBtn {
+  width: 100%;
+  padding: 1.2rem;
+  background-color: var(--color-primary-dark);
+  color: var(--color-text-ivory);
+  border: none;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.placeOrderBtn:hover {
+  background-color: #1a422d;
+  transform: translateY(-2px);
+}

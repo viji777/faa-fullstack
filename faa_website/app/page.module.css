@@ -1,0 +1,1423 @@
+.main {
+  width: 100%;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.section {
+  padding: 6rem 0;
+  position: relative;
+}
+
+.waveDivider {
+  position: absolute;
+  bottom: -2px; /* Fix subpixel rendering gap */
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.waveDivider svg {
+  position: relative;
+  display: block;
+  width: calc(100% + 1.3px);
+  height: 60px;
+}
+
+
+.bgCream {
+  background-color: var(--color-neutral-cream);
+}
+
+.bgLightGreen {
+  background-color: #eaf1ea; /* Soft pastel green to contrast with above sections */
+}
+
+.bgIvory {
+  background-color: #FFFFF0;
+}
+
+.bgDark {
+  background-color: var(--color-primary-dark);
+  color: var(--color-text-ivory);
+}
+
+/* HERO BANNER */
+.heroSection {
+  height: calc(100vh - 75px);
+  min-height: 600px;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.heroFallback {
+  height: 100%;
+  width: 100%;
+  background: var(--color-primary-bg);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 10%;
+}
+
+.carouselContainer {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+.carouselTrack {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.slide {
+  flex: 0 0 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  background-image: var(--bg-desktop);
+}
+
+@media (max-width: 1024px) {
+  .slide {
+    background-image: var(--bg-tablet);
+  }
+}
+
+
+
+.carouselDots {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 1rem;
+  z-index: 10;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.activeDot {
+  background: var(--color-brand-gold);
+  transform: scale(1.2);
+}
+
+/* HEADERS */
+.sectionHeader, .sectionHeaderDark {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.sectionHeader h2, .sectionHeaderDark h2 {
+  font-family: var(--font-playfair);
+  font-size: 2.5rem;
+  color: var(--color-primary-dark);
+  margin-bottom: 0.5rem;
+}
+
+.sectionHeaderDark h2 {
+  color: var(--color-brand-gold);
+}
+
+.sectionHeader p, .sectionHeaderDark p {
+  color: #666;
+  font-size: 1.1rem;
+}
+
+.sectionHeaderDark p {
+  color: var(--color-text-muted);
+}
+
+.linkBtn {
+  margin-top: 1rem;
+  color: var(--color-brand-gold);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-bottom: 1px solid var(--color-brand-gold);
+  padding-bottom: 2px;
+}
+
+/* CATEGORIES */
+.categoriesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 2rem;
+}
+
+.categoryCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  group: hover;
+}
+
+.categoryIconWrapper {
+  width: 180px;
+  height: 180px;
+  border-radius: 24px;
+  background-color: var(--pastel-bg, #f6faec);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.03);
+  transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  padding: 0;
+}
+
+.categoryCard:hover .categoryIconWrapper {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 15px 30px rgba(10, 39, 29, 0.1);
+  background-color: #ffffff;
+}
+
+.categoryIconImg {
+  width: 170px;
+  height: 170px;
+  object-fit: contain;
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.categoryCard:hover .categoryIconImg {
+  transform: scale(1.15) rotate(-3deg);
+}
+
+.categoryPlaceholder {
+  width: 100%;
+  height: 100%;
+  background: var(--color-primary-bg);
+  color: var(--color-brand-gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  font-family: var(--font-playfair);
+}
+
+.categoryName {
+  font-family: var(--font-playfair);
+  font-size: 1.25rem;
+  color: var(--color-primary-dark);
+  transition: color 0.3s ease;
+}
+
+.categoryCard:hover .categoryName {
+  color: var(--color-brand-gold);
+}
+
+/* ABOUT SECTION */
+.aboutGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.subtitle {
+  color: var(--color-brand-gold);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.aboutContent h2 {
+  font-family: var(--font-playfair);
+  font-size: 3rem;
+  color: var(--color-primary-dark);
+  margin-bottom: 1.5rem;
+}
+
+.aboutContent p {
+  color: #555;
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
+  font-size: 1.05rem;
+}
+
+.secondaryBtn {
+  display: inline-block;
+  border: 2px solid var(--color-primary-dark);
+  color: var(--color-primary-dark);
+  padding: 0.8rem 2rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 1rem;
+  transition: all 0.3s ease;
+}
+
+.secondaryBtn:hover {
+  background: var(--color-primary-dark);
+  color: var(--color-text-ivory);
+}
+
+.aboutImageWrapper {
+  width: 100%;
+  height: 500px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+}
+
+.aboutImagePlaceholder {
+  width: 100%;
+  height: 100%;
+  background: var(--color-primary-bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-ivory);
+  font-family: var(--font-playfair);
+  font-size: 4rem;
+}
+
+/* PRODUCTS GRID */
+.productsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 2rem;
+}
+
+/* 8. BENEFITS SECTION (New Design) */
+.benefitsSection {
+  background: linear-gradient(135deg, #071f11 0%, #031207 100%);
+  color: #fff;
+  padding: 6rem 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.benefitsPreHeader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  color: #c9e0d1;
+  font-size: 0.85rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.benefitsPreHeader svg {
+  fill: #c9e0d1;
+}
+
+.benefitsTitle {
+  text-align: center;
+  font-family: var(--font-playfair);
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.1;
+  color: #fff;
+}
+
+.benefitsTitleGold {
+  color: #d4af37;
+}
+
+.benefitsSubtitle {
+  text-align: center;
+  color: #a4bea9;
+  font-size: 1rem;
+  margin-bottom: 4rem;
+}
+
+.benefitsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 2.5rem;
+  margin-bottom: 4rem;
+  position: relative;
+  z-index: 2;
+}
+
+.benefitCard {
+  background: rgba(4, 25, 12, 0.4);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 16px;
+  padding: 3.5rem 1.5rem 1.5rem 1.5rem;
+  text-align: center;
+  position: relative;
+  backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.benefitCard:hover {
+  transform: translateY(-5px);
+  border-color: rgba(212, 175, 55, 0.8);
+}
+
+.benefitGlowIcon {
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #071f11;
+  border: 1px solid #d4af37;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.4), inset 0 0 10px rgba(212, 175, 55, 0.2);
+  color: #d4af37;
+}
+
+.benefitCard h3 {
+  font-family: var(--font-playfair);
+  font-size: 1.25rem;
+  margin-bottom: 0.3rem;
+  color: #fff;
+}
+
+.benefitHeart {
+  color: #d4af37;
+  font-size: 0.7rem;
+  margin-bottom: 1rem;
+}
+
+.benefitCard p {
+  color: #b0c9b6;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+  flex-grow: 1;
+}
+
+.benefitFooter {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: flex-start;
+}
+
+.benefitNumber {
+  color: #d4af37;
+  font-size: 1.5rem;
+  font-family: var(--font-playfair);
+  font-weight: 700;
+  line-height: 1;
+}
+
+.benefitLeaf svg {
+  fill: #4c8a5a;
+  width: 20px;
+  height: 20px;
+}
+
+.trustBadgesPanel {
+  background: transparent;
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  border-radius: 40px;
+  padding: 1.5rem 2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.trustBadge {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: #fff;
+}
+
+.trustBadgeIcon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(212, 175, 55, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #d4af37;
+  flex-shrink: 0;
+}
+
+.trustBadgeText {
+  display: flex;
+  flex-direction: column;
+}
+
+.trustBadgeText strong {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+}
+
+.trustBadgeText span {
+  font-size: 0.75rem;
+  color: #a4bea9;
+}
+
+/* CONNECT WITH US SECTION */
+.waSection {
+  background-color: #0c2415;
+  background-image: radial-gradient(circle at 75% 50%, rgba(212, 175, 55, 0.15) 0%, transparent 60%);
+  padding: 6rem 0;
+  overflow: hidden;
+  position: relative;
+  color: white;
+}
+
+.waContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+@media (min-width: 992px) {
+  .waContainer {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+}
+
+.waContent {
+  flex: 1;
+  max-width: 550px;
+}
+
+.waPreHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #d4af37;
+  font-size: 0.85rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.waPreHeader svg {
+  fill: #d4af37;
+}
+
+.waHeading {
+  font-family: var(--font-playfair);
+  font-size: 4rem;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.1;
+  margin: 0 0 1.5rem 0;
+}
+
+.waHeading span {
+  color: #d4af37;
+  font-style: italic;
+}
+
+.waSubtitle {
+  font-size: 1.1rem;
+  color: #a4bea9;
+  line-height: 1.6;
+  margin-bottom: 3rem;
+}
+
+.waButtonsGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.waCard {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  background-color: #fdf6eb;
+  padding: 1.2rem 1.5rem;
+  border-radius: 16px;
+  text-decoration: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  width: 100%;
+  max-width: 480px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.waCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+}
+
+.waCardIcon {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  background-color: #0c2415;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.waCardText {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.waCardTitle {
+  color: #0c2415;
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 0.2rem;
+}
+
+.waCardDesc {
+  color: #4a5c50;
+  font-size: 0.95rem;
+}
+
+.waCardArrow {
+  color: #d4af37;
+}
+
+/* Floating Badge */
+.waFloatingBadge {
+  position: absolute;
+  top: 15%;
+  left: 0;
+  transform: translateX(-40%);
+  background: rgba(12, 36, 21, 0.85);
+  border: 1px solid rgba(212, 175, 55, 0.5);
+  backdrop-filter: blur(10px);
+  padding: 1rem 1.5rem;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  z-index: 10;
+  animation: floatBadge 4s ease-in-out infinite;
+}
+
+.waBadgeIcon {
+  color: #d4af37;
+}
+
+.waBadgeText {
+  display: flex;
+  flex-direction: column;
+}
+
+.waBadgeTitle {
+  color: #fff;
+  font-weight: 600;
+  font-size: 1.05rem;
+  margin-bottom: 0.2rem;
+}
+
+.waBadgeStatus {
+  color: #a4bea9;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.waBadgeDot {
+  width: 8px;
+  height: 8px;
+  background-color: #25D366;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #25D366;
+}
+
+@keyframes floatBadge {
+  0% { transform: translate(-40%, 0px); }
+  50% { transform: translate(-40%, -10px); }
+  100% { transform: translate(-40%, 0px); }
+}
+
+/* Bottom Bar */
+.waBottomPanel {
+  width: 100%;
+  max-width: 1000px;
+  margin: 5rem auto 0;
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  background: rgba(4, 25, 12, 0.5);
+  backdrop-filter: blur(8px);
+  border-radius: 40px;
+  padding: 1.5rem 2.5rem;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  position: relative;
+  z-index: 2;
+}
+
+.waBottomItem {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.waBottomIcon {
+  color: #d4af37;
+}
+
+.waBottomText {
+  display: flex;
+  flex-direction: column;
+}
+
+.waBottomTitle {
+  color: #fff;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.waBottomDesc {
+  color: #a4bea9;
+  font-size: 0.85rem;
+}
+
+.waVisual {
+  flex: 1;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  perspective: 1000px;
+}
+
+/* CSS SMARTPHONE */
+.cssPhone {
+  width: 280px;
+  height: 580px;
+  background-color: #000;
+  border-radius: 45px;
+  position: relative;
+  box-shadow: -15px 25px 40px rgba(0, 0, 0, 0.2), inset 0 0 0 2px #555, inset 0 0 0 10px #111;
+  transform: rotate3d(0.5, 1, 0, -15deg);
+  transition: transform 0.5s ease;
+}
+
+.cssPhone:hover {
+  transform: rotate3d(0.5, 1, 0, -5deg) scale(1.02);
+}
+
+.phoneNotch {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 25px;
+  background-color: #111;
+  border-radius: 0 0 15px 15px;
+  z-index: 10;
+}
+
+.phoneScreen {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  background-color: #f0f2f5;
+  border-radius: 35px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.phoneHeader {
+  background-color: #075e54;
+  color: white;
+  padding: 40px 20px 20px 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.phoneAvatar {
+  width: 40px;
+  height: 40px;
+  background-color: #ddd;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #075e54;
+}
+
+.phoneHeader h4 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.phoneHeader p {
+  margin: 2px 0 0 0;
+  font-size: 0.8rem;
+  opacity: 0.8;
+}
+
+.phoneBody {
+  flex: 1;
+  background-image: url('data:image/svg+xml;utf8,<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" fill="%23e5ddd5"/><path d="M10 10l10-10h80v100h-100z" fill="%23dcd3c8" opacity="0.3"/></svg>');
+  background-size: cover;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.chatBubble {
+  padding: 10px 14px 20px 14px;
+  max-width: 85%;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+  position: relative;
+  font-size: 0.9rem;
+  color: #303030;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.chatIncoming {
+  background-color: #ffffff;
+  border-radius: 0 12px 12px 12px;
+  align-self: flex-start;
+}
+
+.chatOutgoing {
+  background-color: #dcf8c6;
+  border-radius: 12px 12px 0 12px;
+  align-self: flex-end;
+}
+
+.chatTime {
+  font-size: 0.65rem;
+  color: #888;
+  position: absolute;
+  bottom: 4px;
+  right: 8px;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.readTicks {
+  color: #53bdeb;
+  font-weight: bold;
+  letter-spacing: -2px;
+  padding-right: 2px;
+}
+
+.typingCursor {
+  display: inline-block;
+  width: 2px;
+  height: 1.1em;
+  background-color: #25D366;
+  animation: blink 1s step-end infinite;
+  vertical-align: middle;
+  margin-left: 2px;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+.testimonialsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.testimonialCard {
+  background: white;
+  padding: 2.5rem;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+  text-align: center;
+}
+
+.stars {
+  color: var(--color-brand-gold);
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.quote {
+  font-size: 1.1rem;
+  font-style: italic;
+  color: #555;
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+}
+
+.customerName {
+  font-weight: 700;
+  color: var(--color-primary-dark);
+}
+
+/* WHY PICK FROM FAA SECTION */
+.whyPickSection {
+  width: 100%;
+  aspect-ratio: 16/9;
+  min-height: min-content;
+  background-size: cover;
+  background-position: top center;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-bottom: 1rem;
+}
+
+/* VALUE PROPS */
+.valuePropsWrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 0;
+  width: 100%;
+  overflow-x: auto;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+
+.valuePropsWrapper::-webkit-scrollbar {
+  display: none; /* Safari/Chrome */
+}
+
+.valueProp {
+  flex: 1 1 0;
+  min-width: 160px;
+  text-align: center;
+  padding: 1.2rem 0.8rem 1rem 0.8rem;
+  border-radius: 12px;
+  background-color: #ffffff;
+  border: 1px solid #f0f0f0;
+  border-bottom-width: 5px;
+  border-bottom-style: solid;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.valueProp:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+.cardNumberBg {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+  font-weight: 700;
+  font-size: 0.85rem;
+  padding: 3px 10px;
+  border-radius: 4px;
+  z-index: 2;
+}
+
+.cardNumberTail {
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid; /* color applied inline */
+}
+
+.cardImage {
+  width: 70%;
+  height: auto;
+  margin-bottom: 0.5rem;
+  object-fit: contain;
+}
+
+.cardTitle {
+  font-family: var(--font-playfair);
+  color: var(--color-primary-dark);
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 0.2rem;
+  line-height: 1.2;
+}
+
+.cardHeart {
+  color: var(--color-brand-gold);
+  font-size: 0.7rem;
+  margin-bottom: 0.4rem;
+}
+
+.cardDesc {
+  color: #444;
+  font-size: 0.75rem;
+  line-height: 1.35;
+  font-weight: 400;
+}
+
+@media (max-width: 768px) {
+  .heroSection {
+    height: 50vh;
+    min-height: 350px;
+  }
+  .slide {
+    background-position: center;
+    background-image: var(--bg-mobile);
+  }
+  .slideContent h2 { font-size: 2.5rem; }
+  .aboutGrid { grid-template-columns: 1fr; }
+  .aboutImageWrapper { height: 300px; }
+  
+  .categoriesGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  .categoryIconWrapper {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    margin-bottom: 1rem;
+    border-radius: 20px;
+  }
+  .categoryIconImg {
+    width: 85%;
+    height: 85%;
+  }
+  .categoryName {
+    font-size: 1rem;
+  }
+
+  .productsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  
+  .whyPickSection {
+    aspect-ratio: auto;
+    min-height: 480px;
+    padding-top: 150px;
+    background-position: center center;
+  }
+  
+  .cardDesc {
+    display: none;
+  }
+
+  .valuePropsWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1rem;
+  }
+
+  .valueProp {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0.75rem 1rem;
+    width: 100%;
+    min-width: unset;
+    text-align: left;
+  }
+
+  .cardNumberBg {
+    position: relative;
+    top: 0;
+    left: 0;
+    transform: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    margin-right: 1rem;
+    flex-shrink: 0;
+  }
+
+  .cardNumberTail {
+    display: none;
+  }
+
+  .cardImage {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 0;
+    margin-right: 1rem;
+    flex-shrink: 0;
+  }
+
+  .cardTitle {
+    font-size: 0.95rem;
+    margin-bottom: 0;
+    flex-grow: 1;
+  }
+
+  .cardHeart {
+    display: none;
+  }
+
+  .benefitsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+}
+
+/* CONTACT SECTION REDESIGN */
+.contactSection {
+  background-color: #FDF5E6; /* Solid cream fallback, user will add background image */
+  padding: 6rem 0;
+  position: relative;
+}
+
+.contactContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+}
+
+@media (min-width: 992px) {
+  .contactContainer {
+    flex-direction: row;
+    align-items: center;
+  }
+  .contactLeft {
+    flex: 1;
+    padding-right: 2rem;
+  }
+  .contactRight {
+    flex: 1;
+  }
+}
+
+/* Left Side Styling */
+.contactPreHeader {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: #7b9e65;
+  font-size: 0.85rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+
+.preHeaderLine {
+  height: 1px;
+  width: 40px;
+  background-color: #cda85c;
+}
+
+.contactTitle {
+  font-family: var(--font-playfair);
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: #0f291e;
+  margin: 0 0 1rem 0;
+  line-height: 1.1;
+}
+
+.contactTitle span {
+  color: #cda85c;
+  font-style: italic;
+}
+
+.titleSeparator {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.separatorLine {
+  height: 1px;
+  width: 60px;
+  background-color: #cda85c;
+  opacity: 0.5;
+}
+
+.separatorDiamond {
+  width: 8px;
+  height: 8px;
+  background-color: #cda85c;
+  transform: rotate(45deg);
+  margin: 0 10px;
+}
+
+.contactDescriptionText {
+  color: #4a4a4a;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 3rem;
+  max-width: 450px;
+}
+
+/* Contact Cards (Left) */
+.contactCardsWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.contactCard {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 1.2rem;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+  border: 1px solid rgba(0,0,0,0.03);
+  transition: all 0.3s ease;
+}
+
+.contactCard:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+}
+
+.contactCardIconWrap {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: #0f291e;
+  color: #cda85c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 1.2rem;
+}
+
+.contactCardTextWrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.contactCardTitle {
+  font-weight: 700;
+  color: #0f291e;
+  font-size: 1.1rem;
+  margin-bottom: 0.2rem;
+}
+
+.contactCardDesc {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.contactCardArrow {
+  color: #cda85c;
+  opacity: 0.7;
+}
+
+/* Right Side Styling (Form Card) */
+.formCard {
+  background-color: #ffffff;
+  border-radius: 24px;
+  padding: 4rem 3rem 3rem 3rem;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.05);
+  position: relative;
+}
+
+.formBadge {
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 60px;
+  background-color: #0f291e;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 20px rgba(15, 41, 30, 0.2);
+}
+
+.formBadgeIcon {
+  color: #cda85c;
+}
+
+.contactForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.inputGroup label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.labelIcon {
+  color: #cda85c;
+}
+
+.contactInput, .contactTextarea {
+  width: 100%;
+  padding: 1.2rem;
+  border: 1px solid #eaeaea;
+  border-radius: 12px;
+  background-color: #fcfcfc;
+  font-family: inherit;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  color: #333;
+}
+
+.contactInput:focus, .contactTextarea:focus {
+  outline: none;
+  border-color: #7b9e65;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(123, 158, 101, 0.1);
+}
+
+.contactTextarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.contactSubmitBtn {
+  background-color: #0f291e;
+  color: #cda85c;
+  border: none;
+  padding: 1.2rem;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  margin-top: 1rem;
+}
+
+.contactSubmitBtn:hover:not(:disabled) {
+  background-color: #1a3c28;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(15, 41, 30, 0.3);
+}
+
+.contactSubmitBtn:disabled {
+  background-color: #888;
+  color: #eee;
+  cursor: not-allowed;
+}
+
+.contactStatus {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: 8px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.statusSuccess {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.statusError {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+@media (max-width: 768px) {
+  .sectionHeader h2, .sectionHeaderDark h2 {
+    font-size: 2rem;
+  }
+  .waHeading {
+    font-size: 2.5rem;
+  }
+  .contactTitle {
+    font-size: 2.5rem;
+  }
+  .aboutContent h2 {
+    font-size: 2rem;
+  }
+  .formCard {
+    padding: 3rem 2rem 2rem 2rem;
+  }
+  .section {
+    padding: 4rem 0;
+  }
+}
+
+@media (max-width: 1024px) {
+  .aboutGrid {
+    gap: 2rem;
+  }
+}
+
