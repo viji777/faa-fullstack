@@ -42,7 +42,7 @@ export default function Home() {
     setIsSubmittingContact(true);
     setContactStatus('');
     try {
-      const res = await fetch('http://localhost:5000/api/contact', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/contact`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name: contactName, phone: contactPhone, address: contactAddress, description: contactDescription })
@@ -80,10 +80,10 @@ export default function Home() {
     const fetchData = async () => {
       try {
         const [bannersRes, categoriesRes, featuredRes, specialRes] = await Promise.all([
-          fetch('http://localhost:5000/api/banners').then(res => res.json()),
-          fetch('http://localhost:5000/api/categories').then(res => res.json()),
-          fetch('http://localhost:5000/api/products?isFeatured=true').then(res => res.json()),
-          fetch('http://localhost:5000/api/products?isSpecial=true').then(res => res.json())
+          fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/banners`).then(res => res.json()),
+          fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/categories`).then(res => res.json()),
+          fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/products?isFeatured=true`).then(res => res.json()),
+          fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/products?isSpecial=true`).then(res => res.json())
         ]);
         
         // Filter out banners that aren't for the homepage hero (optional, just take first 5)

@@ -30,7 +30,7 @@ export function AuthProvider({ children }) {
 
   const login = async (email, password) => {
     try {
-      const res = await fetch('http://localhost:5000/api/auth/customer/login', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/auth/customer/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })
@@ -57,7 +57,7 @@ export function AuthProvider({ children }) {
 
   const signup = async (name, email, password, phone) => {
     try {
-      const res = await fetch('http://localhost:5000/api/auth/customer/signup', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/auth/customer/signup`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, email, password, phone })
@@ -84,7 +84,7 @@ export function AuthProvider({ children }) {
 
   const googleLogin = async (tokenId) => {
     try {
-      const res = await fetch('http://localhost:5000/api/auth/customer/google', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/auth/customer/google`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ tokenId })

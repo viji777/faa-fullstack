@@ -39,7 +39,7 @@ function ProductsContent() {
 
   useEffect(() => {
     // Fetch categories for sidebar
-    fetch('http://localhost:5000/api/categories')
+    fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/categories`)
       .then(res => res.json())
       .then(data => {
         setCategories(data);
@@ -55,7 +55,7 @@ function ProductsContent() {
 
   useEffect(() => {
     setLoading(true);
-    let url = 'http://localhost:5000/api/products';
+    let url = `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/products`;
     const params = new URLSearchParams();
     
     if (categoryId) params.append('category', categoryId);

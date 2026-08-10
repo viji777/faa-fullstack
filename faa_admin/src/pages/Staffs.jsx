@@ -25,7 +25,7 @@ const Staffs = () => {
   const fetchStaffs = async () => {
     try {
       setLoading(true);
-      const res = await axios.get('http://localhost:5000/api/admin/roles/users', getAuthHeaders());
+      const res = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/admin/roles/users`, getAuthHeaders());
       // Filter only support staff (role === 2)
       const staffList = res.data.filter(u => u.role === 2);
       setStaffs(staffList);
@@ -65,10 +65,10 @@ const Staffs = () => {
     try {
       const payload = { ...formData, role: 2 };
       if (modalMode === 'add') {
-        await axios.post('http://localhost:5000/api/admin/roles/users', payload, getAuthHeaders());
+        await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/admin/roles/users`, payload, getAuthHeaders());
         toast.success('Staff created successfully');
       } else {
-        await axios.put(`http://localhost:5000/api/admin/roles/users/${currentStaffId}`, formData, getAuthHeaders());
+        await axios.put(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/admin/roles/users/${currentStaffId}`, formData, getAuthHeaders());
         toast.success('Staff updated successfully');
       }
       handleCloseModal();
@@ -83,7 +83,7 @@ const Staffs = () => {
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this staff member?')) {
       try {
-        await axios.delete(`http://localhost:5000/api/admin/roles/users/${id}`, getAuthHeaders());
+        await axios.delete(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/admin/roles/users/${id}`, getAuthHeaders());
         toast.success('Staff deleted');
         fetchStaffs();
       } catch (error) {

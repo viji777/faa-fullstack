@@ -65,7 +65,7 @@ const Dashboard = () => {
 
       const queryString = queryParams.length > 0 ? `?${queryParams.join('&')}` : '';
       
-      const response = await axios.get(`http://localhost:5000/api/dashboard/stats${queryString}`, config);
+      const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/dashboard/stats${queryString}`, config);
       setStats(response.data);
     } catch (error) {
       console.warn("Failed to fetch real stats. Using mock data.", error.message);

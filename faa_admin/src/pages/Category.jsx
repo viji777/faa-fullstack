@@ -37,7 +37,7 @@ const Category = () => {
   const fetchCategories = async () => {
     try {
       setLoading(true);
-      const res = await axios.get('http://localhost:5000/api/categories');
+      const res = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/categories`);
       setCategories(res.data);
     } catch (error) {
       toast.error('Failed to fetch categories');
@@ -126,7 +126,7 @@ const Category = () => {
         const uploadData = new FormData();
         uploadData.append('image', selectedFile);
         
-        const uploadRes = await axios.post('http://localhost:5000/api/upload', uploadData, {
+        const uploadRes = await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/upload`, uploadData, {
           headers: { 
             Authorization: `Bearer ${token}`,
             'Content-Type': 'multipart/form-data'
@@ -141,7 +141,7 @@ const Category = () => {
         const uploadData = new FormData();
         uploadData.append('image', selectedIconFile);
         
-        const uploadRes = await axios.post('http://localhost:5000/api/upload', uploadData, {
+        const uploadRes = await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/upload`, uploadData, {
           headers: { 
             Authorization: `Bearer ${token}`,
             'Content-Type': 'multipart/form-data'
@@ -154,10 +154,10 @@ const Category = () => {
       const payload = { ...formData, image: imageUrl, imageId, icon: iconUrl, iconId };
 
       if (modalMode === 'add') {
-        await axios.post('http://localhost:5000/api/categories', payload, getAuthHeaders());
+        await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/categories`, payload, getAuthHeaders());
         toast.success('Category created successfully');
       } else {
-        await axios.put(`http://localhost:5000/api/categories/${currentCategoryId}`, payload, getAuthHeaders());
+        await axios.put(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/categories/${currentCategoryId}`, payload, getAuthHeaders());
         toast.success('Category updated successfully');
       }
       handleCloseModal();
@@ -172,7 +172,7 @@ const Category = () => {
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this category?')) {
       try {
-        await axios.delete(`http://localhost:5000/api/categories/${id}`, getAuthHeaders());
+        await axios.delete(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/categories/${id}`, getAuthHeaders());
         toast.success('Category deleted');
         fetchCategories();
       } catch (error) {

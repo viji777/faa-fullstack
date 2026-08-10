@@ -22,7 +22,7 @@ const ForgotPassword = () => {
     setErrors({});
     
     try {
-      await axios.post('http://localhost:5000/api/auth/admin/forgot-password', { email });
+      await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/auth/admin/forgot-password`, { email });
       
       setLoading(false);
       // Save email so ResetPassword page can use it

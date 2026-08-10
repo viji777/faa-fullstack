@@ -20,7 +20,7 @@ export default function ProductDetail() {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/api/products/slug/${params.slug}`);
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/products/slug/${params.slug}`);
         if (!res.ok) {
           throw new Error('Product not found');
         }
@@ -46,7 +46,7 @@ export default function ProductDetail() {
 
   useEffect(() => {
     if (product?.category?._id) {
-      fetch(`http://localhost:5000/api/products?category=${product.category._id}`)
+      fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/products?category=${product.category._id}`)
         .then(res => res.json())
         .then(data => {
           // Filter out the current product and take up to 10

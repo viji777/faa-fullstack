@@ -42,7 +42,7 @@ const VerifyOTP = () => {
     setErrors({});
     
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/admin/verify-otp', {
+      const response = await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/auth/admin/verify-otp`, {
         email,
         otp
       });
@@ -64,7 +64,7 @@ const VerifyOTP = () => {
     
     setErrors({});
     try {
-      await axios.post('http://localhost:5000/api/auth/admin/resend-otp', { email });
+      await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/auth/admin/resend-otp`, { email });
       setCountdown(60); // 60s cooldown
       toast.success('A new OTP has been sent to your email.');
     } catch (error) {

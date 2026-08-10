@@ -15,7 +15,7 @@ const Customers = () => {
   const fetchCustomers = async () => {
     try {
       setLoading(true);
-      const res = await axios.get('http://localhost:5000/api/customers', getAuthHeaders());
+      const res = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/customers`, getAuthHeaders());
       setCustomers(res.data);
     } catch (error) {
       toast.error('Failed to fetch customers');

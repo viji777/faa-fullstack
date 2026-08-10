@@ -40,8 +40,8 @@ const Products = () => {
     try {
       setLoading(true);
       const [productsRes, categoriesRes] = await Promise.all([
-        axios.get('http://localhost:5000/api/products'),
-        axios.get('http://localhost:5000/api/categories')
+        axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/products`),
+        axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/categories`)
       ]);
       setProducts(productsRes.data);
       setCategories(categoriesRes.data);
@@ -174,7 +174,7 @@ const Products = () => {
         if (img.file) {
           const uploadData = new FormData();
           uploadData.append('image', img.file);
-          const uploadRes = await axios.post('http://localhost:5000/api/upload', uploadData, {
+          const uploadRes = await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/upload`, uploadData, {
             headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'multipart/form-data' }
           });
           finalImages.push({
@@ -198,10 +198,10 @@ const Products = () => {
       const payload = { ...formData, images: finalImages, variants: validVariants };
 
       if (modalMode === 'add') {
-        await axios.post('http://localhost:5000/api/products', payload, getAuthHeaders());
+        await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/products`, payload, getAuthHeaders());
         toast.success('Product created successfully');
       } else {
-        await axios.put(`http://localhost:5000/api/products/${currentProductId}`, payload, getAuthHeaders());
+        await axios.put(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/products/${currentProductId}`, payload, getAuthHeaders());
         toast.success('Product updated successfully');
       }
       handleCloseModal();
@@ -216,7 +216,7 @@ const Products = () => {
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this product?')) {
       try {
-        await axios.delete(`http://localhost:5000/api/products/${id}`, getAuthHeaders());
+        await axios.delete(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/products/${id}`, getAuthHeaders());
         toast.success('Product deleted');
         fetchData();
       } catch (error) {

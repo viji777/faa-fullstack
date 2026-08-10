@@ -47,9 +47,9 @@ const Banners = () => {
     try {
       setLoading(true);
       const [bannersRes, categoriesRes, productsRes] = await Promise.all([
-        axios.get('http://localhost:5000/api/banners'),
-        axios.get('http://localhost:5000/api/categories'),
-        axios.get('http://localhost:5000/api/products')
+        axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/banners`),
+        axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/categories`),
+        axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/products`)
       ]);
       setBanners(bannersRes.data);
       setCategories(categoriesRes.data);
@@ -160,7 +160,7 @@ const Banners = () => {
         const uploadData = new FormData();
         uploadData.append('image', selectedFile);
         
-        const uploadRes = await axios.post('http://localhost:5000/api/upload', uploadData, {
+        const uploadRes = await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/upload`, uploadData, {
           headers: { 
             Authorization: `Bearer ${token}`,
             'Content-Type': 'multipart/form-data'
@@ -173,7 +173,7 @@ const Banners = () => {
       if (selectedTabletFile) {
         const uploadData = new FormData();
         uploadData.append('image', selectedTabletFile);
-        const uploadRes = await axios.post('http://localhost:5000/api/upload', uploadData, {
+        const uploadRes = await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/upload`, uploadData, {
           headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'multipart/form-data' }
         });
         tabletImageUrl = uploadRes.data.url;
@@ -183,7 +183,7 @@ const Banners = () => {
       if (selectedMobileFile) {
         const uploadData = new FormData();
         uploadData.append('image', selectedMobileFile);
-        const uploadRes = await axios.post('http://localhost:5000/api/upload', uploadData, {
+        const uploadRes = await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/upload`, uploadData, {
           headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'multipart/form-data' }
         });
         mobileImageUrl = uploadRes.data.url;
@@ -203,10 +203,10 @@ const Banners = () => {
       if (payload.linkType !== 'Product') payload.linkProduct = undefined;
 
       if (modalMode === 'add') {
-        await axios.post('http://localhost:5000/api/banners', payload, getAuthHeaders());
+        await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/banners`, payload, getAuthHeaders());
         toast.success('Banner created successfully');
       } else {
-        await axios.put(`http://localhost:5000/api/banners/${currentBannerId}`, payload, getAuthHeaders());
+        await axios.put(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/banners/${currentBannerId}`, payload, getAuthHeaders());
         toast.success('Banner updated successfully');
       }
       handleCloseModal();
@@ -221,7 +221,7 @@ const Banners = () => {
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this banner?')) {
       try {
-        await axios.delete(`http://localhost:5000/api/banners/${id}`, getAuthHeaders());
+        await axios.delete(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/banners/${id}`, getAuthHeaders());
         toast.success('Banner deleted');
         fetchData();
       } catch (error) {

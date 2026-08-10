@@ -15,7 +15,7 @@ const Orders = () => {
   const fetchOrders = async () => {
     try {
       setLoading(true);
-      const res = await axios.get('http://localhost:5000/api/orders', getAuthHeaders());
+      const res = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/orders`, getAuthHeaders());
       setOrders(res.data);
     } catch (error) {
       toast.error('Failed to fetch orders');
@@ -30,7 +30,7 @@ const Orders = () => {
 
   const handleStatusChange = async (orderId, newStatus) => {
     try {
-      await axios.put(`http://localhost:5000/api/orders/${orderId}/status`, { status: newStatus }, getAuthHeaders());
+      await axios.put(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/orders/${orderId}/status`, { status: newStatus }, getAuthHeaders());
       toast.success('Order status updated');
       fetchOrders();
     } catch (error) {
