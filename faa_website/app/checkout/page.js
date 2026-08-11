@@ -58,6 +58,33 @@ export default function CheckoutPage() {
       return;
     }
 
+    // Strict Custom Validations
+    if (!formData.name.trim() || formData.name.trim().length < 3) {
+      return toast.error('Name must be at least 3 characters long');
+    }
+
+    const phoneRegex = /^[0-9]{10,}$/;
+    if (!phoneRegex.test(formData.phone.trim())) {
+      return toast.error('Please enter a valid phone number (digits only, min 10)');
+    }
+
+    if (!formData.addressLine1.trim() || formData.addressLine1.trim().length < 3) {
+      return toast.error('Address Line 1 must be at least 3 characters long');
+    }
+
+    if (!formData.city.trim() || formData.city.trim().length < 3) {
+      return toast.error('City must be at least 3 characters long');
+    }
+
+    if (!formData.state.trim() || formData.state.trim().length < 3) {
+      return toast.error('State must be at least 3 characters long');
+    }
+
+    const pincodeRegex = /^[0-9]{5,6}$/;
+    if (!pincodeRegex.test(formData.pincode.trim())) {
+      return toast.error('Please enter a valid Pincode (digits only)');
+    }
+
     try {
       setLoading(true);
       
@@ -130,7 +157,7 @@ export default function CheckoutPage() {
         <div className={styles.checkoutForm}>
           <h2 className={styles.sectionTitle}><MapPin size={24} /> Delivery Address</h2>
           
-          <form id="checkout-form" onSubmit={handlePlaceOrder} className={styles.formGrid}>
+          <form id="checkout-form" onSubmit={handlePlaceOrder} className={styles.formGrid} noValidate>
             <div className={`${styles.inputGroup} ${styles.fullWidth}`}>
               <label>Full Name</label>
               <input type="text" name="name" value={formData.name} onChange={handleInputChange} required />
