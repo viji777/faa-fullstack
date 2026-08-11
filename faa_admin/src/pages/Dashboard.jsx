@@ -15,35 +15,6 @@ const Dashboard = () => {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
 
-  // Mock data fallback
-  const mockData = {
-    totalRevenue: 125400,
-    totalOrders: 342,
-    totalCustomers: 89,
-    totalProducts: 45,
-    recentOrders: [
-      { _id: '1', user: { name: 'John Doe' }, totalAmount: 1200, status: 'Pending', createdAt: new Date().toISOString() },
-      { _id: '2', user: { name: 'Jane Smith' }, totalAmount: 3400, status: 'Shipped', createdAt: new Date().toISOString() },
-      { _id: '3', user: { name: 'Raj Kumar' }, totalAmount: 850, status: 'Delivered', createdAt: new Date().toISOString() },
-    ],
-    monthlyRevenue: [
-      { month: 1, revenue: 4000 }, { month: 2, revenue: 3000 }, { month: 3, revenue: 2000 },
-      { month: 4, revenue: 2780 }, { month: 5, revenue: 1890 }, { month: 6, revenue: 2390 },
-      { month: 7, revenue: 3490 }, { month: 8, revenue: 0 }, { month: 9, revenue: 0 },
-      { month: 10, revenue: 0 }, { month: 11, revenue: 0 }, { month: 12, revenue: 0 },
-    ],
-    categorySales: [
-      { name: 'Nuts', value: 45000 },
-      { name: 'Dates', value: 38000 },
-      { name: 'Spices', value: 21000 },
-      { name: 'Dried Fruits', value: 21400 },
-    ],
-    orderRatio: {
-      success: 280,
-      cancelled: 42,
-      pending: 20
-    }
-  };
 
   const fetchStats = async () => {
     setLoading(true);
@@ -68,8 +39,18 @@ const Dashboard = () => {
       const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/dashboard/stats${queryString}`, config);
       setStats(response.data);
     } catch (error) {
-      console.warn("Failed to fetch real stats. Using mock data.", error.message);
-      setStats(mockData);
+      console.error("Failed to fetch real stats.", error.message);
+      // Fallback to empty state
+      setStats({
+        totalRevenue: 0,
+        totalOrders: 0,
+        totalCustomers: 0,
+        totalProducts: 0,
+        recentOrders: [],
+        monthlyRevenue: Array.from({ length: 12 }, (_, i) => ({ month: i + 1, revenue: 0 })),
+        categorySales: [],
+        orderRatio: { success: 0, cancelled: 0, pending: 0 }
+      });
     } finally {
       setLoading(false);
     }
