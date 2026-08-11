@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { Eye, X } from 'lucide-react';
 import '../pages/Dashboard.css';
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectedOrder, setSelectedOrder] = useState(null);
 
   const getAuthHeaders = () => {
     const token = localStorage.getItem('token') || sessionStorage.getItem('token');
@@ -100,10 +102,17 @@ const Orders = () => {
                           {order.status}
                         </span>
                       </td>
-                      <td className="text-center">
+                      <td className="text-center" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>
+                        <button 
+                          onClick={() => setSelectedOrder(order)} 
+                          style={{ background: '#f1f5f9', border: 'none', padding: '0.4rem', borderRadius: '6px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                          title="View Details"
+                        >
+                          <Eye size={18} color="#475569" />
+                        </button>
                         <select 
                           className="modern-input" 
-                          style={{ padding: '0.4rem 0.8rem', fontSize: '0.8rem', width: '130px', cursor: 'pointer', appearance: 'auto', background: '#fff' }}
+                          style={{ padding: '0.4rem 0.8rem', fontSize: '0.8rem', width: '130px', cursor: 'pointer', appearance: 'auto', background: '#fff', margin: 0 }}
                           value={order.status}
                           onChange={(e) => handleStatusChange(order._id, e.target.value)}
                         >
@@ -122,6 +131,53 @@ const Orders = () => {
           )}
         </div>
       </div>
+
+      {selectedOrder && (
+        <div className="modal-overlay" onClick={() => setSelectedOrder(null)}>
+          <div className="modal-content" onClick={e => e.stopPropagation()} style={{ maxWidth: '600px', width: '90%' }}>
+            <div className="modal-header">
+              <h2>Order Details - #{selectedOrder._id.substring(selectedOrder._id.length - 6).toUpperCase()}</h2>
+              <button className="close-btn" onClick={() => setSelectedOrder(null)}><X size={20} /></button>
+            </div>
+            <div className="modal-body" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', maxHeight: '70vh', overflowY: 'auto' }}>
+              <div>
+                <h4 style={{ color: 'var(--accent-primary)', marginBottom: '0.5rem' }}>Shipping Address</h4>
+                <div style={{ background: '#f8fafc', padding: '1rem', borderRadius: '8px' }}>
+                  <strong style={{ fontSize: '1.1rem' }}>{selectedOrder.shippingAddress?.name}</strong><br/>
+                  <div style={{ color: '#475569', marginTop: '0.5rem', lineHeight: '1.5' }}>
+                    {selectedOrder.shippingAddress?.addressLine1}<br/>
+                    {selectedOrder.shippingAddress?.addressLine2 && <>{selectedOrder.shippingAddress?.addressLine2}<br/></>}
+                    {selectedOrder.shippingAddress?.city}, {selectedOrder.shippingAddress?.state}<br/>
+                    {selectedOrder.shippingAddress?.country} - {selectedOrder.shippingAddress?.pincode}<br/>
+                  </div>
+                  <div style={{ marginTop: '0.5rem' }}>
+                    <strong>Phone:</strong> {selectedOrder.shippingAddress?.phone}
+                  </div>
+                </div>
+              </div>
+              
+              <div>
+                <h4 style={{ color: 'var(--accent-primary)', marginBottom: '0.5rem' }}>Order Items</h4>
+                <div style={{ background: '#f8fafc', padding: '1rem', borderRadius: '8px', display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
+                  {selectedOrder.items?.map((item, idx) => (
+                    <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', borderBottom: idx < selectedOrder.items.length - 1 ? '1px solid #e2e8f0' : 'none', paddingBottom: idx < selectedOrder.items.length - 1 ? '0.8rem' : '0' }}>
+                      <div>
+                        <div style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{item.name}</div>
+                        <div style={{ fontSize: '0.85rem', color: '#64748b', marginTop: '0.2rem' }}>Size: {item.size} | Qty: {item.quantity}</div>
+                      </div>
+                      <div style={{ fontWeight: 700, color: 'var(--accent-primary)' }}>₹{item.price * item.quantity}</div>
+                    </div>
+                  ))}
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '1rem', paddingRight: '0.5rem' }}>
+                  <span style={{ fontSize: '1.1rem', color: 'var(--text-secondary)' }}>Total Amount:</span>
+                  <strong style={{ fontSize: '1.2rem', color: 'var(--accent-primary)', marginLeft: '0.5rem' }}>₹{selectedOrder.totalAmount}</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
