@@ -4,13 +4,14 @@ import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { GoogleLogin } from '@react-oauth/google';
 import toast from 'react-hot-toast';
-import { X } from 'lucide-react';
+import { X, Eye, EyeOff } from 'lucide-react';
 import styles from './AuthModal.module.css';
 
 const AuthModal = () => {
   const { isAuthModalOpen, setAuthModalOpen, login, signup, googleLogin } = useAuth();
   const [isLogin, setIsLogin] = useState(true);
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   
   const [formData, setFormData] = useState({
     name: '',
@@ -92,6 +93,7 @@ const AuthModal = () => {
   const toggleMode = () => {
     setIsLogin(!isLogin);
     setFormData({ name: '', email: '', password: '', phone: '' });
+    setShowPassword(false);
   };
 
   return (
@@ -159,14 +161,24 @@ const AuthModal = () => {
 
             <div className={styles.inputGroup}>
               <label>Password</label>
-              <input 
-                type="password" 
-                name="password" 
-                className={styles.input} 
-                value={formData.password}
-                onChange={handleChange}
-                placeholder="••••••••"
-              />
+              <div style={{ position: 'relative' }}>
+                <input 
+                  type={showPassword ? "text" : "password"} 
+                  name="password" 
+                  className={styles.input} 
+                  value={formData.password}
+                  onChange={handleChange}
+                  placeholder="••••••••"
+                  style={{ width: '100%', paddingRight: '40px' }}
+                />
+                <button 
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', color: '#666', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                >
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
+              </div>
             </div>
 
             <button type="submit" className={styles.submitBtn} disabled={loading}>
