@@ -12,7 +12,7 @@ import styles from './page.module.css';
 export default function CheckoutPage() {
   const router = useRouter();
   const { cartItems, cartTotal, clearCart } = useCart();
-  const { user, setAuthModalOpen } = useAuth();
+  const { user, token, setAuthModalOpen } = useAuth();
   
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -88,7 +88,7 @@ export default function CheckoutPage() {
     try {
       setLoading(true);
       
-      const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+      const authHeaderToken = token || localStorage.getItem('customerToken');
       
       const orderPayload = {
         shippingAddress: formData,
@@ -103,7 +103,7 @@ export default function CheckoutPage() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+          'Authorization': `Bearer ${authHeaderToken}`
         },
         body: JSON.stringify(orderPayload)
       });
