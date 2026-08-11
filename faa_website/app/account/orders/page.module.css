@@ -188,7 +188,44 @@
 }
 
 .totalAmount {
-  font-size: 1.25rem;
   font-weight: 700;
-  color: var(--color-primary-dark, #1a3c2a);
+  font-size: 1.1rem;
+  color: var(--color-brand-gold);
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(0,0,0,0.05);
+}
+
+.pageBtn {
+  background: var(--color-brand-gold);
+  color: var(--color-text-dark);
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.pageBtn:disabled {
+  background: #e2e8f0;
+  color: #94a3b8;
+  cursor: not-allowed;
+}
+
+.pageBtn:not(:disabled):hover {
+  background: var(--color-brand-gold-dark);
+  transform: translateY(-2px);
+}
+
+.pageInfo {
+  font-weight: 600;
+  color: var(--color-text-muted);
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import ProductCard from '../components/ProductCard';
@@ -21,6 +21,17 @@ export default function ProductsClient({
 
   const [minPrice, setMinPrice] = useState(searchParams.minPrice || '');
   const [maxPrice, setMaxPrice] = useState(searchParams.maxPrice || '');
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 8;
+
+  // Reset to page 1 when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [categoryId, searchQuery, searchParams.minPrice, searchParams.maxPrice, isSpecialParam, isFeaturedParam]);
+
+  const totalPages = Math.ceil(products.length / itemsPerPage);
+  const currentProducts = products.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
   const handlePriceFilter = (e) => {
     e.preventDefault();
@@ -125,11 +136,41 @@ export default function ProductsClient({
           </div>
 
           {products.length > 0 ? (
-            <div className={styles.productsGrid}>
-              {products.map(product => (
-                <ProductCard key={product._id} product={product} />
-              ))}
-            </div>
+            <>
+              <div className={styles.productsGrid}>
+                {currentProducts.map(product => (
+                  <ProductCard key={product._id} product={product} />
+                ))}
+              </div>
+              
+              {totalPages > 1 && (
+                <div className={styles.pagination}>
+                  <button 
+                    disabled={currentPage === 1} 
+                    onClick={() => {
+                      setCurrentPage(prev => prev - 1);
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }}
+                    className={styles.pageBtn}
+                  >
+                    Previous
+                  </button>
+                  <span className={styles.pageInfo}>
+                    Page {currentPage} of {totalPages}
+                  </span>
+                  <button 
+                    disabled={currentPage === totalPages} 
+                    onClick={() => {
+                      setCurrentPage(prev => prev + 1);
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }}
+                    className={styles.pageBtn}
+                  >
+                    Next
+                  </button>
+                </div>
+              )}
+            </>
           ) : (
             <div className={styles.emptyState}>
               <div className={styles.emptyStateIcon}>🌱</div>

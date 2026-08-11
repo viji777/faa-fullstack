@@ -9,6 +9,9 @@ const Products = () => {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+  
   // Modal state
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalMode, setModalMode] = useState('add');
@@ -256,7 +259,7 @@ const Products = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {products.map(product => {
+                  {products.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map(product => {
                     const primaryImg = product.images?.find(img => img.isPrimary) || product.images?.[0];
                     const minPrice = product.variants?.length ? Math.min(...product.variants.map(v => v.price)) : 0;
                     
@@ -296,6 +299,28 @@ const Products = () => {
                   })}
                 </tbody>
               </table>
+            </div>
+          )}
+          
+          {Math.ceil(products.length / itemsPerPage) > 1 && (
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '1rem', marginTop: '1.5rem' }}>
+              <button 
+                disabled={currentPage === 1} 
+                onClick={() => setCurrentPage(p => p - 1)}
+                style={{ padding: '0.5rem 1rem', borderRadius: '8px', border: '1px solid #e2e8f0', background: currentPage === 1 ? '#f8fafc' : '#fff', cursor: currentPage === 1 ? 'not-allowed' : 'pointer', color: currentPage === 1 ? '#94a3b8' : '#334155', fontWeight: 600 }}
+              >
+                Previous
+              </button>
+              <span style={{ fontSize: '0.9rem', color: '#64748b', fontWeight: 600 }}>
+                Page {currentPage} of {Math.ceil(products.length / itemsPerPage)}
+              </span>
+              <button 
+                disabled={currentPage === Math.ceil(products.length / itemsPerPage)} 
+                onClick={() => setCurrentPage(p => p + 1)}
+                style={{ padding: '0.5rem 1rem', borderRadius: '8px', border: '1px solid #e2e8f0', background: currentPage === Math.ceil(products.length / itemsPerPage) ? '#f8fafc' : '#fff', cursor: currentPage === Math.ceil(products.length / itemsPerPage) ? 'not-allowed' : 'pointer', color: currentPage === Math.ceil(products.length / itemsPerPage) ? '#94a3b8' : '#334155', fontWeight: 600 }}
+              >
+                Next
+              </button>
             </div>
           )}
         </div>

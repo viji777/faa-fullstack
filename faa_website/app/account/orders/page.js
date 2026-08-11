@@ -13,6 +13,9 @@ export default function MyOrdersPage() {
   const router = useRouter();
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
+  
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
 
   useEffect(() => {
     if (!user) {
@@ -78,7 +81,7 @@ export default function MyOrdersPage() {
         </div>
       ) : (
         <div className={styles.ordersList}>
-          {orders.map(order => (
+          {orders.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map(order => (
             <div key={order._id} className={styles.orderCard}>
               <div className={styles.orderHeader}>
                 <div>
@@ -110,6 +113,34 @@ export default function MyOrdersPage() {
               </div>
             </div>
           ))}
+          
+          {Math.ceil(orders.length / itemsPerPage) > 1 && (
+            <div className={styles.pagination}>
+              <button 
+                disabled={currentPage === 1} 
+                onClick={() => {
+                  setCurrentPage(prev => prev - 1);
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+                className={styles.pageBtn}
+              >
+                Previous
+              </button>
+              <span className={styles.pageInfo}>
+                Page {currentPage} of {Math.ceil(orders.length / itemsPerPage)}
+              </span>
+              <button 
+                disabled={currentPage === Math.ceil(orders.length / itemsPerPage)} 
+                onClick={() => {
+                  setCurrentPage(prev => prev + 1);
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+                className={styles.pageBtn}
+              >
+                Next
+              </button>
+            </div>
+          )}
         </div>
       )}
     </div>
