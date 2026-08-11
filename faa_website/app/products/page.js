@@ -1,6 +1,7 @@
 import ProductsClient from './ProductsClient';
 
 export default async function ProductsPage({ searchParams }) {
+  const resolvedSearchParams = await searchParams;
   const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
   const fetchConfig = { cache: 'no-store' }; // Dynamic fetch based on URL params
 
@@ -16,18 +17,18 @@ export default async function ProductsPage({ searchParams }) {
     }
 
     // 2. Determine current category based on searchParams
-    if (searchParams.category && categories.length > 0) {
-      currentCategory = categories.find(c => c._id === searchParams.category) || null;
+    if (resolvedSearchParams.category && categories.length > 0) {
+      currentCategory = categories.find(c => c._id === resolvedSearchParams.category) || null;
     }
 
     // 3. Build product fetch URL based on params
     const params = new URLSearchParams();
-    if (searchParams.category) params.append('category', searchParams.category);
-    if (searchParams.search || searchParams.keyword) params.append('keyword', searchParams.search || searchParams.keyword);
-    if (searchParams.minPrice) params.append('minPrice', searchParams.minPrice);
-    if (searchParams.maxPrice) params.append('maxPrice', searchParams.maxPrice);
-    if (searchParams.isSpecial) params.append('isSpecial', searchParams.isSpecial);
-    if (searchParams.isFeatured) params.append('isFeatured', searchParams.isFeatured);
+    if (resolvedSearchParams.category) params.append('category', resolvedSearchParams.category);
+    if (resolvedSearchParams.search || resolvedSearchParams.keyword) params.append('keyword', resolvedSearchParams.search || resolvedSearchParams.keyword);
+    if (resolvedSearchParams.minPrice) params.append('minPrice', resolvedSearchParams.minPrice);
+    if (resolvedSearchParams.maxPrice) params.append('maxPrice', resolvedSearchParams.maxPrice);
+    if (resolvedSearchParams.isSpecial) params.append('isSpecial', resolvedSearchParams.isSpecial);
+    if (resolvedSearchParams.isFeatured) params.append('isFeatured', resolvedSearchParams.isFeatured);
 
     const url = `${API_URL}/api/products${params.toString() ? `?${params.toString()}` : ''}`;
     
@@ -44,7 +45,7 @@ export default async function ProductsPage({ searchParams }) {
       products={products}
       categories={categories}
       currentCategory={currentCategory}
-      searchParams={searchParams}
+      searchParams={resolvedSearchParams}
     />
   );
 }

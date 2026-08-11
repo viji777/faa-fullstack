@@ -1,7 +1,8 @@
 import ProductDetailClient from './ProductDetailClient';
 
 export default async function ProductDetail({ params }) {
-  const { slug } = params;
+  const resolvedParams = await params;
+  const { slug } = resolvedParams;
   const fetchConfig = { next: { revalidate: 60 } };
   const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
 
