@@ -5,6 +5,7 @@ import { useParams } from 'next/navigation';
 import { toast } from 'react-hot-toast';
 import { useCart } from '../../context/CartContext';
 import ProductCard from '../../components/ProductCard';
+import Loader from '../../components/Loader';
 import styles from './ProductDetail.module.css';
 
 export default function ProductDetail() {
@@ -57,7 +58,7 @@ export default function ProductDetail() {
     }
   }, [product]);
 
-  if (loading) return <div style={{ padding: '4rem', textAlign: 'center' }}>Loading product details...</div>;
+  if (loading) return <Loader fullScreen={true} />;
   if (error || !product) return <div style={{ padding: '4rem', textAlign: 'center' }}>Product not found.</div>;
 
   return (

@@ -4,6 +4,7 @@ import React, { useState, useEffect, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import ProductCard from '../components/ProductCard';
+import Loader from '../components/Loader';
 import styles from './page.module.css';
 
 function ProductsContent() {
@@ -167,7 +168,7 @@ function ProductsContent() {
           </div>
 
           {loading ? (
-            <div>Loading products...</div>
+            <Loader fullScreen={false} />
           ) : products.length > 0 ? (
             <div className={styles.productsGrid}>
               {products.map(product => (
@@ -189,7 +190,7 @@ function ProductsContent() {
 
 export default function ProductsPage() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<Loader fullScreen={true} />}>
       <ProductsContent />
     </Suspense>
   );

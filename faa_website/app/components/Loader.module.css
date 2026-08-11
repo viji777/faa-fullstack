@@ -1,0 +1,81 @@
+.loaderContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+  width: 100%;
+}
+
+.fullScreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(255, 255, 255, 0.95);
+  z-index: 99999;
+}
+
+.rippleWrapper {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logoContainer {
+  position: relative;
+  z-index: 10;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+}
+
+.logo {
+  object-fit: contain;
+}
+
+.ripple {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  border: 3px solid var(--primary-color, #1a432b);
+  opacity: 0;
+  animation: rippleAnimation 2s cubic-bezier(0.65, 0, 0.34, 1) infinite;
+}
+
+.ripple:nth-child(2) {
+  animation-delay: 0.6s;
+}
+
+.ripple:nth-child(3) {
+  animation-delay: 1.2s;
+}
+
+@keyframes rippleAnimation {
+  0% {
+    width: 90px;
+    height: 90px;
+    opacity: 1;
+    border-width: 4px;
+  }
+  100% {
+    width: 250px;
+    height: 250px;
+    opacity: 0;
+    border-width: 0px;
+  }
+}

@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import ProductCard from './components/ProductCard';
 import GoogleReviewSlider from './components/GoogleReviewSlider';
+import Loader from './components/Loader';
 import styles from './page.module.css';
 import shopByCategoryBg from './src/Shop by category bg.png';
 import aboutFaaWebp from './src/About Faa.webp';
@@ -25,6 +26,7 @@ export default function Home() {
   const [featuredProducts, setFeaturedProducts] = useState([]);
   const [specialProducts, setSpecialProducts] = useState([]);
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
   const [contactName, setContactName] = useState('');
   const [contactPhone, setContactPhone] = useState('');
   const [contactAddress, setContactAddress] = useState('');
@@ -93,6 +95,8 @@ export default function Home() {
         setSpecialProducts(specialRes);
       } catch (err) {
         console.error("Error fetching homepage data:", err);
+      } finally {
+        setIsLoading(false);
       }
     };
     
@@ -112,6 +116,10 @@ export default function Home() {
   const pastelColors = ['#c8e6c9', '#ffcdd2', '#bbdefb', '#ffe0b2', '#f8bbd0'];
   // Theme colors for the value prop cards (from design)
   const cardColors = ['#1a432b', '#ff7b7b', '#609946', '#f39c12', '#8e7cc3'];
+
+  if (isLoading) {
+    return <Loader fullScreen={true} />;
+  }
 
   return (
     <div className={styles.main}>
