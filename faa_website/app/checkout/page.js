@@ -165,7 +165,7 @@ export default function CheckoutPage() {
             
             <div className={`${styles.inputGroup} ${styles.fullWidth}`}>
               <label>Phone Number</label>
-              <input type="tel" name="phone" value={formData.phone} onChange={handleInputChange} required />
+              <input type="tel" name="phone" value={formData.phone} onChange={handleInputChange} required maxLength="15" />
             </div>
             
             <div className={`${styles.inputGroup} ${styles.fullWidth}`}>

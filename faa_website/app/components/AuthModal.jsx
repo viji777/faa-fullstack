@@ -139,6 +139,7 @@ const AuthModal = () => {
                     value={formData.phone}
                     onChange={handleChange}
                     placeholder="e.g. 9876543210"
+                    maxLength="15"
                   />
                 </div>
               </>

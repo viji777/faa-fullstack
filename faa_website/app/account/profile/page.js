@@ -128,6 +128,7 @@ export default function ProfilePage() {
             onChange={handleChange} 
             className={`${styles.input} ${!isEditing ? styles.disabledInput : ''}`}
             disabled={!isEditing}
+            maxLength="15"
           />
         </div>
 
