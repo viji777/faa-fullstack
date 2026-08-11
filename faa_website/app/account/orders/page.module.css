@@ -1,21 +1,86 @@
-.main {
-  min-height: 100vh;
-  padding: 120px 2rem 4rem;
-  background-color: var(--bg-primary);
+.ordersContainer {
+  width: 100%;
 }
 
-.container {
-  max-width: 1000px;
-  margin: 0 auto;
+.loadingState {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: #666;
+  font-size: 1.1rem;
 }
 
-.pageTitle {
-  font-family: 'Outfit', sans-serif;
-  font-size: 2rem;
-  color: var(--text-primary);
-  margin-bottom: 2rem;
+/* Empty State */
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 3rem 1rem;
 }
 
+.emptyStateIconWrap {
+  margin-bottom: 1.5rem;
+  color: #8fb198;
+  position: relative;
+}
+
+/* A soft shadow/background blob for the icon to match the screenshot */
+.emptyStateIconWrap::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 160px;
+  height: 160px;
+  background-color: #f0f4f1;
+  border-radius: 50%;
+  z-index: -1;
+}
+
+.emptyStateIcon {
+  color: #72967d;
+  filter: drop-shadow(0 10px 15px rgba(0,0,0,0.05));
+}
+
+.emptyStateTitle {
+  font-size: 1.75rem;
+  color: var(--color-primary-dark, #1a3c2a);
+  margin-bottom: 0.75rem;
+  font-weight: 700;
+}
+
+.emptyStateDesc {
+  color: #666;
+  max-width: 450px;
+  margin: 0 auto 2rem auto;
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+.shopBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: var(--color-primary-dark, #1a3c2a);
+  color: white;
+  padding: 0.8rem 2rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  font-size: 1rem;
+}
+
+.shopBtn:hover {
+  background-color: #122b1e;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(26,60,42,0.2);
+}
+
+
+/* Populated State */
 .ordersList {
   display: flex;
   flex-direction: column;
@@ -23,37 +88,36 @@
 }
 
 .orderCard {
-  background: white;
+  border: 1px solid #eaeaea;
   border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
   overflow: hidden;
+  background: white;
+  transition: box-shadow 0.2s ease;
+}
+
+.orderCard:hover {
+  box-shadow: 0 4px 15px rgba(0,0,0,0.03);
 }
 
 .orderHeader {
-  background: #f8fafc;
-  padding: 1rem 1.5rem;
+  background-color: #fcfcfb;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid #eaeaea;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #e2e8f0;
-}
-
-@media (max-width: 600px) {
-  .orderHeader {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.5rem;
-  }
 }
 
 .orderId {
   font-weight: 700;
-  color: var(--text-primary);
+  color: var(--color-primary-dark, #1a3c2a);
+  font-size: 1.1rem;
+  margin-bottom: 0.25rem;
 }
 
 .orderDate {
-  font-size: 0.9rem;
-  color: var(--text-secondary);
+  font-size: 0.85rem;
+  color: #777;
 }
 
 .statusBadge {
@@ -61,33 +125,13 @@
   border-radius: 20px;
   font-size: 0.85rem;
   font-weight: 600;
-  text-transform: capitalize;
 }
 
-.statusPending {
-  background: rgba(245, 158, 11, 0.1);
-  color: #f59e0b;
-}
-
-.statusProcessing {
-  background: rgba(59, 130, 246, 0.1);
-  color: #3b82f6;
-}
-
-.statusShipped {
-  background: rgba(139, 92, 246, 0.1);
-  color: #8b5cf6;
-}
-
-.statusDelivered {
-  background: rgba(16, 185, 129, 0.1);
-  color: #10b981;
-}
-
-.statusCancelled {
-  background: rgba(239, 68, 68, 0.1);
-  color: #ef4444;
-}
+.statusPending { background: #fff3cd; color: #856404; }
+.statusProcessing { background: #cce5ff; color: #004085; }
+.statusShipped { background: #d4edda; color: #155724; }
+.statusDelivered { background: #e6f0e9; color: var(--color-primary-dark, #1a3c2a); }
+.statusCancelled { background: #f8d7da; color: #721c24; }
 
 .orderBody {
   padding: 1.5rem;
@@ -97,6 +141,7 @@
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .orderItem {
@@ -104,7 +149,7 @@
   justify-content: space-between;
   align-items: center;
   padding-bottom: 1rem;
-  border-bottom: 1px dashed #e2e8f0;
+  border-bottom: 1px dashed #eee;
 }
 
 .orderItem:last-child {
@@ -114,75 +159,36 @@
 
 .itemName {
   font-weight: 600;
-  color: var(--text-primary);
+  color: #333;
+  margin-bottom: 0.25rem;
 }
 
 .itemMeta {
   font-size: 0.85rem;
-  color: var(--text-secondary);
-  margin-top: 0.2rem;
+  color: #777;
 }
 
 .itemPrice {
   font-weight: 600;
-  color: var(--text-primary);
+  color: #333;
 }
 
 .orderFooter {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
+  gap: 1rem;
   padding-top: 1rem;
-  margin-top: 1rem;
-  border-top: 1px solid #e2e8f0;
+  border-top: 1px solid #eaeaea;
 }
 
 .totalLabel {
-  font-weight: 600;
-  color: var(--text-secondary);
+  font-size: 0.9rem;
+  color: #666;
 }
 
 .totalAmount {
   font-size: 1.25rem;
   font-weight: 700;
-  color: var(--color-primary);
-}
-
-.emptyState {
-  text-align: center;
-  padding: 5rem 2rem;
-  background: white;
-  border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-}
-
-.emptyStateIcon {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-}
-
-.emptyState h3 {
-  font-family: 'Outfit', sans-serif;
-  color: var(--text-primary);
-  margin-bottom: 0.5rem;
-}
-
-.emptyState p {
-  color: var(--text-secondary);
-  margin-bottom: 1.5rem;
-}
-
-.shopBtn {
-  display: inline-block;
-  padding: 0.8rem 2rem;
-  background: var(--color-primary);
-  color: white;
-  text-decoration: none;
-  border-radius: 8px;
-  font-weight: 600;
-  transition: all 0.2s;
-}
-
-.shopBtn:hover {
-  background: var(--color-primary-dark);
+  color: var(--color-primary-dark, #1a3c2a);
 }
