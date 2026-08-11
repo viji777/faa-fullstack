@@ -213,3 +213,68 @@
   font-size: 0.75rem;
   color: var(--accent-secondary);
 }
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .app-container {
+    flex-direction: column;
+  }
+  
+  .sidebar {
+    width: 100%;
+    height: auto;
+    padding: 1rem;
+    border-right: none;
+    border-bottom: 1px solid var(--border-color);
+    position: relative;
+  }
+  
+  .sidebar-logo {
+    margin-bottom: 1rem;
+    justify-content: center;
+  }
+  
+  .sidebar-nav ul {
+    flex-direction: row;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+    gap: 0.5rem;
+    /* Hide scrollbar for cleaner look */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .sidebar-nav ul::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .nav-link {
+    white-space: nowrap;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+  
+  .sidebar-footer {
+    display: none; /* Can be moved to header or profile menu in future */
+  }
+  
+  .top-header {
+    height: auto;
+    padding: 1rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  
+  .search-bar {
+    width: 100%;
+    order: 3;
+  }
+  
+  .header-actions {
+    margin-left: auto;
+  }
+  
+  .page-content {
+    padding: 1rem;
+  }
+}
