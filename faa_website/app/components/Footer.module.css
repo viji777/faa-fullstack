@@ -43,9 +43,16 @@
 }
 
 @media (max-width: 576px) {
+  .curveDivider {
+    height: 60px;
+    top: -59px;
+  }
   .grid {
     grid-template-columns: 1fr;
     gap: 2rem;
+  }
+  .footer {
+    padding: 1rem 0 2rem;
   }
 }
 
