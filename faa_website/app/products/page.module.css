@@ -209,3 +209,43 @@
   color: #666;
   font-size: 1.1rem;
 }
+
+/* Mobile Responsiveness */
+@media (max-width: 900px) {
+  .container {
+    flex-direction: column;
+    gap: 2rem;
+  }
+  .sidebar {
+    width: 100%;
+  }
+  .productsGrid {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .bannerTitle {
+    font-size: 1.8rem;
+    text-align: center;
+    padding: 0 1rem;
+  }
+  .productsHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  .productsGrid {
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  .container {
+    padding: 0 1rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .productsGrid {
+    grid-template-columns: 1fr;
+  }
+}

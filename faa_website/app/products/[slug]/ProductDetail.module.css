@@ -168,6 +168,22 @@
   .container {
     grid-template-columns: 1fr;
     padding: 2rem 1.5rem;
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .container {
+    padding: 1.5rem 1rem;
+  }
+  .title {
+    font-size: 2.2rem;
+  }
+  .price {
+    font-size: 1.5rem;
+  }
+  .mainImageWrapper {
+    border-radius: 12px;
   }
 }
 
@@ -235,6 +251,13 @@
 @media (max-width: 600px) {
   .slideItem {
     flex: 0 0 100%;
+    min-width: unset;
+  }
+  .relatedTitle {
+    font-size: 1.6rem;
+  }
+  .relatedSection {
+    padding: 0 1rem;
   }
 }
 
