@@ -116,7 +116,12 @@ const Navbar = () => {
           <button className={styles.iconBtnBox} aria-label="Search" onClick={() => setIsSearchOpen(!isSearchOpen)}><Search size={20} /></button>
           
           {user ? (
-            <button className={styles.iconBtnBox} aria-label="Logout" onClick={logout} title={`Logged in as ${user.name}`}><LogOut size={20} /></button>
+            <div style={{ display: 'flex', gap: '0.5rem' }}>
+              <Link href="/account/orders" className={styles.iconBtnBox} aria-label="My Orders" title="My Orders">
+                <User size={20} />
+              </Link>
+              <button className={styles.iconBtnBox} aria-label="Logout" onClick={logout} title={`Logout (${user.name})`}><LogOut size={20} /></button>
+            </div>
           ) : (
             <button className={styles.iconBtnBox} aria-label="Account" onClick={() => setAuthModalOpen(true)}><User size={20} /></button>
           )}

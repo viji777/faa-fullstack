@@ -7,19 +7,13 @@ const User = require('../models/User');
 // @access  Private (Logged in user)
 exports.placeOrder = async (req, res) => {
   try {
-    const { shippingAddress } = req.body;
+    const { shippingAddress, items } = req.body;
 
     if (!shippingAddress || !shippingAddress.name || !shippingAddress.phone || !shippingAddress.addressLine1 || !shippingAddress.city || !shippingAddress.state || !shippingAddress.country || !shippingAddress.pincode) {
       return res.status(400).json({ message: 'Please provide complete shipping address' });
     }
 
-    // 1. Fetch user's cart
-    const cart = await Cart.findOne({ user: req.user._id }).populate({
-      path: 'items.product',
-      select: 'name variants'
-    });
-
-    if (!cart || cart.items.length === 0) {
+    if (!items || items.length === 0) {
       return res.status(400).json({ message: 'Your cart is empty' });
     }
 
@@ -28,27 +22,27 @@ exports.placeOrder = async (req, res) => {
     const orderItems = [];
     let whatsappItemsText = '';
 
-    for (const item of cart.items) {
+    for (const item of items) {
       const product = item.product;
-      if (!product) continue; // If product was deleted
-
-      const variantIdStr = item.variantId.toString();
-      const selectedVariant = product.variants.find(v => v._id.toString() === variantIdStr);
+      const variant = item.variant;
       
-      if (selectedVariant) {
-        const itemTotal = selectedVariant.price * item.quantity;
-        totalAmount += itemTotal;
-        
-        orderItems.push({
-          product: product._id,
-          name: product.name,
-          size: selectedVariant.size,
-          quantity: item.quantity,
-          price: selectedVariant.price
-        });
+      if (!product) continue;
 
-        whatsappItemsText += `- ${item.quantity}x ${product.name} (${selectedVariant.size}) - ₹${itemTotal}\n`;
-      }
+      const price = variant ? variant.price : (product.variants?.[0]?.price || 0);
+      const sizeStr = variant ? variant.size : (product.variants?.[0]?.size || 'Default');
+      
+      const itemTotal = price * item.quantity;
+      totalAmount += itemTotal;
+      
+      orderItems.push({
+        product: product._id,
+        name: product.name,
+        size: sizeStr,
+        quantity: item.quantity,
+        price: price
+      });
+
+      whatsappItemsText += `- ${item.quantity}x ${product.name} (${sizeStr}) - ₹${itemTotal}\n`;
     }
 
     if (orderItems.length === 0) {
@@ -76,9 +70,6 @@ exports.placeOrder = async (req, res) => {
       }
     });
 
-    // 5. Clear the Cart
-    cart.items = [];
-    await cart.save();
 
     // 6. Generate Multi-Line WhatsApp Message
     const adminPhone = '917200407943';
