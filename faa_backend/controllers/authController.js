@@ -371,6 +371,7 @@ exports.customerSignup = async (req, res) => {
         name: user.name,
         email: user.email,
         phone: user.phone,
+        address: user.address,
         role: user.role,
         token: generateToken(user._id),
       });
@@ -407,6 +408,7 @@ exports.customerLogin = async (req, res) => {
         name: user.name,
         email: user.email,
         phone: user.phone,
+        address: user.address,
         role: user.role,
         token: generateToken(user._id),
       });
@@ -448,6 +450,8 @@ exports.customerGoogleLogin = async (req, res) => {
         _id: user.id,
         name: user.name,
         email: user.email,
+        phone: user.phone,
+        address: user.address,
         role: user.role,
         token: generateToken(user._id),
       });
@@ -467,6 +471,8 @@ exports.customerGoogleLogin = async (req, res) => {
         _id: user.id,
         name: user.name,
         email: user.email,
+        phone: user.phone,
+        address: user.address,
         role: user.role,
         token: generateToken(user._id),
       });
