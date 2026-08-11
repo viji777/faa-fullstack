@@ -16,6 +16,7 @@ export default function AddressesPage() {
     pincode: ''
   });
   const [loading, setLoading] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
     if (user?.address) {
@@ -27,6 +28,13 @@ export default function AddressesPage() {
         country: user.address.country || '',
         pincode: user.address.pincode || ''
       });
+      if (user.address.addressLine1) {
+        setIsEditing(false);
+      } else {
+        setIsEditing(true);
+      }
+    } else {
+      setIsEditing(true);
     }
   }, [user]);
 
@@ -72,6 +80,7 @@ export default function AddressesPage() {
       if (res.ok) {
         updateUserLocally({ address: data.address });
         toast.success('Address updated successfully');
+        setIsEditing(false);
       } else {
         toast.error(data.message || 'Failed to update address');
       }
@@ -106,8 +115,9 @@ export default function AddressesPage() {
             name="addressLine1" 
             value={formData.addressLine1} 
             onChange={handleChange} 
-            className={styles.input}
+            className={`${styles.input} ${!isEditing ? styles.disabledInput : ''}`}
             required
+            disabled={!isEditing}
             placeholder="Flat, House no., Building, Company"
           />
         </div>
@@ -120,7 +130,8 @@ export default function AddressesPage() {
             name="addressLine2" 
             value={formData.addressLine2} 
             onChange={handleChange} 
-            className={styles.input}
+            className={`${styles.input} ${!isEditing ? styles.disabledInput : ''}`}
+            disabled={!isEditing}
             placeholder="Area, Street, Sector, Village"
           />
         </div>
@@ -134,8 +145,9 @@ export default function AddressesPage() {
               name="city" 
               value={formData.city} 
               onChange={handleChange} 
-              className={styles.input}
+              className={`${styles.input} ${!isEditing ? styles.disabledInput : ''}`}
               required
+              disabled={!isEditing}
             />
           </div>
           <div className={styles.formGroup}>
@@ -146,8 +158,9 @@ export default function AddressesPage() {
               name="state" 
               value={formData.state} 
               onChange={handleChange} 
-              className={styles.input}
+              className={`${styles.input} ${!isEditing ? styles.disabledInput : ''}`}
               required
+              disabled={!isEditing}
             />
           </div>
         </div>
@@ -161,8 +174,9 @@ export default function AddressesPage() {
               name="country" 
               value={formData.country} 
               onChange={handleChange} 
-              className={styles.input}
+              className={`${styles.input} ${!isEditing ? styles.disabledInput : ''}`}
               required
+              disabled={!isEditing}
             />
           </div>
           <div className={styles.formGroup}>
@@ -173,21 +187,47 @@ export default function AddressesPage() {
               name="pincode" 
               value={formData.pincode} 
               onChange={handleChange} 
-              className={styles.input}
+              className={`${styles.input} ${!isEditing ? styles.disabledInput : ''}`}
               required
+              disabled={!isEditing}
             />
           </div>
         </div>
 
         <div className={styles.formActions}>
-          <button type="submit" className={styles.saveBtn} disabled={loading}>
-            {loading ? 'Saving...' : (
-              <>
-                <Save size={18} />
-                Save Address
-              </>
-            )}
-          </button>
+          {isEditing ? (
+            <div style={{ display: 'flex', gap: '1rem' }}>
+              <button type="submit" className={styles.saveBtn} disabled={loading}>
+                {loading ? 'Saving...' : (
+                  <>
+                    <Save size={18} />
+                    Save Address
+                  </>
+                )}
+              </button>
+              {user?.address?.addressLine1 && (
+                <button 
+                  type="button" 
+                  onClick={() => setIsEditing(false)} 
+                  className={styles.saveBtn} 
+                  style={{ backgroundColor: '#fff', color: '#333', border: '1px solid #ccc' }}
+                >
+                  Cancel
+                </button>
+              )}
+            </div>
+          ) : (
+            <button 
+              type="button" 
+              className={styles.saveBtn} 
+              onClick={(e) => {
+                e.preventDefault();
+                setIsEditing(true);
+              }}
+            >
+              Edit Address
+            </button>
+          )}
         </div>
       </form>
     </div>

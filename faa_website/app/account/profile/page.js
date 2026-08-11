@@ -12,6 +12,7 @@ export default function ProfilePage() {
     phone: '',
   });
   const [loading, setLoading] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
     if (user) {
@@ -19,6 +20,13 @@ export default function ProfilePage() {
         name: user.name || '',
         phone: user.phone || '',
       });
+      if (user.name) {
+        setIsEditing(false);
+      } else {
+        setIsEditing(true);
+      }
+    } else {
+      setIsEditing(true);
     }
   }, [user]);
 
@@ -58,6 +66,7 @@ export default function ProfilePage() {
       if (res.ok) {
         updateUserLocally({ name: data.name, phone: data.phone });
         toast.success('Profile updated successfully');
+        setIsEditing(false);
       } else {
         toast.error(data.message || 'Failed to update profile');
       }
@@ -103,8 +112,9 @@ export default function ProfilePage() {
             name="name" 
             value={formData.name} 
             onChange={handleChange} 
-            className={styles.input}
+            className={`${styles.input} ${!isEditing ? styles.disabledInput : ''}`}
             required
+            disabled={!isEditing}
           />
         </div>
 
@@ -116,19 +126,45 @@ export default function ProfilePage() {
             name="phone" 
             value={formData.phone} 
             onChange={handleChange} 
-            className={styles.input}
+            className={`${styles.input} ${!isEditing ? styles.disabledInput : ''}`}
+            disabled={!isEditing}
           />
         </div>
 
         <div className={styles.formActions}>
-          <button type="submit" className={styles.saveBtn} disabled={loading}>
-            {loading ? 'Saving...' : (
-              <>
-                <Save size={18} />
-                Save Changes
-              </>
-            )}
-          </button>
+          {isEditing ? (
+            <div style={{ display: 'flex', gap: '1rem' }}>
+              <button type="submit" className={styles.saveBtn} disabled={loading}>
+                {loading ? 'Saving...' : (
+                  <>
+                    <Save size={18} />
+                    Save Changes
+                  </>
+                )}
+              </button>
+              {user?.name && (
+                <button 
+                  type="button" 
+                  onClick={() => setIsEditing(false)} 
+                  className={styles.saveBtn} 
+                  style={{ backgroundColor: '#fff', color: '#333', border: '1px solid #ccc' }}
+                >
+                  Cancel
+                </button>
+              )}
+            </div>
+          ) : (
+            <button 
+              type="button" 
+              className={styles.saveBtn} 
+              onClick={(e) => {
+                e.preventDefault();
+                setIsEditing(true);
+              }}
+            >
+              Edit Profile
+            </button>
+          )}
         </div>
       </form>
     </div>
