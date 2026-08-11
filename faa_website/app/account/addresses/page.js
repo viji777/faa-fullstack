@@ -37,6 +37,24 @@ export default function AddressesPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!formData.addressLine1.trim() || formData.addressLine1.trim().length < 3) {
+      return toast.error('Address Line 1 must be at least 3 characters long');
+    }
+
+    if (!formData.city.trim() || formData.city.trim().length < 3) {
+      return toast.error('City must be at least 3 characters long');
+    }
+
+    if (!formData.state.trim() || formData.state.trim().length < 3) {
+      return toast.error('State must be at least 3 characters long');
+    }
+
+    const pincodeRegex = /^[0-9]{5,6}$/;
+    if (!pincodeRegex.test(formData.pincode.trim())) {
+      return toast.error('Please enter a valid Pincode (digits only)');
+    }
+
     setLoading(true);
 
     try {
@@ -79,7 +97,7 @@ export default function AddressesPage() {
         </div>
       </div>
 
-      <form className={styles.form} onSubmit={handleSubmit}>
+      <form className={styles.form} onSubmit={handleSubmit} noValidate>
         <div className={styles.formGroup}>
           <label htmlFor="addressLine1">Address Line 1</label>
           <input 

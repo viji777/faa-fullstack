@@ -29,6 +29,18 @@ export default function ProfilePage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!formData.name.trim() || formData.name.trim().length < 3) {
+      return toast.error('Name must be at least 3 characters long');
+    }
+
+    if (formData.phone.trim()) {
+      const phoneRegex = /^[0-9]{10,15}$/;
+      if (!phoneRegex.test(formData.phone.trim())) {
+        return toast.error('Please enter a valid phone number (digits only, 10 to 15 digits)');
+      }
+    }
+
     setLoading(true);
 
     try {
@@ -71,7 +83,7 @@ export default function ProfilePage() {
         </div>
       </div>
 
-      <form className={styles.form} onSubmit={handleSubmit}>
+      <form className={styles.form} onSubmit={handleSubmit} noValidate>
         <div className={styles.formGroup}>
           <label htmlFor="email">Email Address (Cannot be changed)</label>
           <input 

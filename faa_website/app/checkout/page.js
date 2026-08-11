@@ -63,9 +63,9 @@ export default function CheckoutPage() {
       return toast.error('Name must be at least 3 characters long');
     }
 
-    const phoneRegex = /^[0-9]{10,}$/;
+    const phoneRegex = /^[0-9]{10,15}$/;
     if (!phoneRegex.test(formData.phone.trim())) {
-      return toast.error('Please enter a valid phone number (digits only, min 10)');
+      return toast.error('Please enter a valid phone number (digits only, 10 to 15 digits)');
     }
 
     if (!formData.addressLine1.trim() || formData.addressLine1.trim().length < 3) {
