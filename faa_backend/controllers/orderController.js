@@ -83,9 +83,11 @@ exports.placeOrder = async (req, res) => {
     formattedAddress += `\n${shippingAddress.country} - ${shippingAddress.pincode}`;
     formattedAddress += `\nPhone: ${shippingAddress.phone}`;
 
+    const shortOrderId = order._id.toString().substring(18).toUpperCase();
+
     const message = `Hello Faa Nuts and Dates! I would like to place an order.
 
-*Order ID:* ${order._id}
+*Order ID:* #FAA-${shortOrderId}
 
 *Order Details:*
 ${whatsappItemsText}

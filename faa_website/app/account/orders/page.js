@@ -82,7 +82,7 @@ export default function MyOrdersPage() {
             <div key={order._id} className={styles.orderCard}>
               <div className={styles.orderHeader}>
                 <div>
-                  <div className={styles.orderId}>Order #{order._id.substring(order._id.length - 8).toUpperCase()}</div>
+                  <div className={styles.orderId}>Order #FAA-{order._id.substring(18).toUpperCase()}</div>
                   <div className={styles.orderDate}>{new Date(order.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</div>
                 </div>
                 <div className={`${styles.statusBadge} ${getStatusClass(order.status)}`}>
