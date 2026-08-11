@@ -243,9 +243,3 @@
     padding: 0 1rem;
   }
 }
-
-@media (max-width: 400px) {
-  .productsGrid {
-    grid-template-columns: 1fr;
-  }
-}
