@@ -1,7 +1,13 @@
 .main {
+  --text-primary: #1a1a1a;
+  --text-secondary: #555555;
+  --color-primary: #0B2516; /* Dark Green */
+  --color-primary-dark: #122b1e;
+  
   min-height: 100vh;
   padding: 120px 2rem 4rem;
-  background-color: var(--bg-primary);
+  /* Remove explicit bg if body is already dark, or just keep transparent */
+  background-color: transparent;
 }
 
 .container {
@@ -66,6 +72,12 @@
   font-size: 1rem;
   transition: all 0.2s;
   outline: none;
+  color: #1a1a1a;
+  background-color: #ffffff;
+}
+
+.inputGroup input::placeholder {
+  color: #94a3b8;
 }
 
 .inputGroup input:focus {
