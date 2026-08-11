@@ -131,18 +131,25 @@ export default function Home() {
               className={styles.carouselTrack} 
               style={{ transform: `translateX(-${currentSlide * 100}%)` }}
             >
-              {banners.map((banner) => (
+              {banners.map((banner, index) => (
                   <div 
                     key={banner._id} 
                     className={styles.slide}
-                    style={{ 
-                      '--bg-desktop': `url(${banner.image})`,
-                      '--bg-tablet': `url(${banner.tabletImage || banner.image})`,
-                      '--bg-mobile': `url(${banner.mobileImage || banner.tabletImage || banner.image})`,
-                      cursor: banner.linkType !== 'None' ? 'pointer' : 'default'
-                    }}
-                  onClick={() => handleBannerClick(banner)}
-                />
+                    style={{ cursor: banner.linkType !== 'None' ? 'pointer' : 'default' }}
+                    onClick={() => handleBannerClick(banner)}
+                  >
+                    <picture>
+                      <source media="(max-width: 768px)" srcSet={banner.mobileImage || banner.tabletImage || banner.image} />
+                      <source media="(max-width: 1024px)" srcSet={banner.tabletImage || banner.image} />
+                      <img 
+                        src={banner.image} 
+                        alt="Faa Nuts Hero Banner" 
+                        style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+                        fetchPriority={index === 0 ? "high" : "auto"}
+                        loading={index === 0 ? "eager" : "lazy"}
+                      />
+                    </picture>
+                  </div>
               ))}
             </div>
             
