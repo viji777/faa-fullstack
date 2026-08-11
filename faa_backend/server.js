@@ -84,4 +84,22 @@ app.use('/api/contact', contactRoutes);
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
+  
+  // Render Free Tier Keep-Alive
+  // Pings the server every 14 minutes to prevent it from going to sleep
+  const KEEP_ALIVE_URL = process.env.RENDER_EXTERNAL_URL || process.env.KEEP_ALIVE_URL || `https://faa-backend-ggct.onrender.com`;
+  if (KEEP_ALIVE_URL) {
+    console.log(`Setting up keep-alive ping for ${KEEP_ALIVE_URL}`);
+    setInterval(async () => {
+      try {
+        const fetch = (await import('node-fetch')).default || global.fetch; // Supports node 18+ native fetch or node-fetch
+        if (typeof fetch === 'function') {
+          const res = await fetch(KEEP_ALIVE_URL);
+          console.log(`Keep-alive ping sent to ${KEEP_ALIVE_URL}. Status: ${res.status}`);
+        }
+      } catch (err) {
+        console.error(`Keep-alive ping failed:`, err.message);
+      }
+    }, 14 * 60 * 1000); // 14 minutes
+  }
 });
