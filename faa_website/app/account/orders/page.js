@@ -9,7 +9,7 @@ import styles from './page.module.css';
 import { toast } from 'react-hot-toast';
 
 export default function MyOrdersPage() {
-  const { user } = useAuth();
+  const { user, token } = useAuth();
   const router = useRouter();
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -22,7 +22,6 @@ export default function MyOrdersPage() {
 
     const fetchOrders = async () => {
       try {
-        const token = localStorage.getItem('token') || sessionStorage.getItem('token');
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/orders/myorders`, {
           headers: {
             'Authorization': `Bearer ${token}`

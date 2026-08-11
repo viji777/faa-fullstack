@@ -26,7 +26,6 @@ export default function AccountLayoutClient({ children }) {
   }
 
   const navItems = [
-    { name: 'Dashboard', path: '/account/dashboard', icon: LayoutGrid },
     { name: 'My Orders', path: '/account/orders', icon: ClipboardList },
     { name: 'My Addresses', path: '/account/addresses', icon: MapPin },
     { name: 'My Profile', path: '/account/profile', icon: User },
