@@ -7,12 +7,17 @@ export default async function ProductDetail({ params }) {
 
   let product = null;
   let relatedProducts = [];
+  let debugError = null;
+  let attemptUrl = null;
 
   try {
+    attemptUrl = `${API_URL}/api/products/slug/${slug}`;
     // 1. Fetch the product by slug
-    const res = await fetch(`${API_URL}/api/products/slug/${slug}`, fetchConfig);
+    const res = await fetch(attemptUrl, fetchConfig);
     if (res.ok) {
       product = await res.json();
+    } else {
+      debugError = `Failed to fetch: ${res.status} ${res.statusText}. URL: ${attemptUrl}`;
     }
 
     // 2. Fetch related products based on category
@@ -25,6 +30,7 @@ export default async function ProductDetail({ params }) {
       }
     }
   } catch (error) {
+    debugError = `Fetch caught error: ${error.message}. URL: ${attemptUrl}`;
     console.error("Error fetching product details:", error);
   }
 
@@ -32,6 +38,7 @@ export default async function ProductDetail({ params }) {
     <ProductDetailClient 
       product={product} 
       relatedProducts={relatedProducts} 
+      debugError={debugError}
     />
   );
 }

@@ -5,7 +5,7 @@ import { useCart } from '../../context/CartContext';
 import ProductCard from '../../components/ProductCard';
 import styles from './ProductDetail.module.css';
 
-export default function ProductDetailClient({ product, relatedProducts = [] }) {
+export default function ProductDetailClient({ product, relatedProducts = [], debugError }) {
   const { addToCart } = useCart();
   
   const [selectedVariant, setSelectedVariant] = useState(
@@ -15,7 +15,12 @@ export default function ProductDetailClient({ product, relatedProducts = [] }) {
   const primaryImg = product?.images?.find(img => img.isPrimary) || product?.images?.[0];
   const [mainImage, setMainImage] = useState(primaryImg ? primaryImg.url : null);
 
-  if (!product) return <div style={{ padding: '4rem', textAlign: 'center' }}>Product not found.</div>;
+  if (!product) return (
+    <div style={{ padding: '4rem', textAlign: 'center' }}>
+      <p>Product not found.</p>
+      {debugError && <p style={{ color: 'red', fontSize: '0.8rem', marginTop: '1rem' }}>Debug: {debugError}</p>}
+    </div>
+  );
 
   return (
     <div className={styles.pageWrapper}>
