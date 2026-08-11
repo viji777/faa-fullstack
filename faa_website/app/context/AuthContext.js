@@ -38,7 +38,7 @@ export function AuthProvider({ children }) {
       const data = await res.json();
       
       if (res.ok && data.token) {
-        const userData = { _id: data._id, name: data.name, email: data.email, phone: data.phone, role: data.role };
+        const userData = { _id: data._id, name: data.name, email: data.email, phone: data.phone, address: data.address, role: data.role };
         setToken(data.token);
         setUser(userData);
         localStorage.setItem('customerToken', data.token);
@@ -65,7 +65,7 @@ export function AuthProvider({ children }) {
       const data = await res.json();
       
       if (res.ok && data.token) {
-        const userData = { _id: data._id, name: data.name, email: data.email, phone: data.phone, role: data.role };
+        const userData = { _id: data._id, name: data.name, email: data.email, phone: data.phone, address: data.address, role: data.role };
         setToken(data.token);
         setUser(userData);
         localStorage.setItem('customerToken', data.token);
@@ -92,7 +92,7 @@ export function AuthProvider({ children }) {
       const data = await res.json();
       
       if (res.ok && data.token) {
-        const userData = { _id: data._id, name: data.name, email: data.email, phone: data.phone, role: data.role };
+        const userData = { _id: data._id, name: data.name, email: data.email, phone: data.phone, address: data.address, role: data.role };
         setToken(data.token);
         setUser(userData);
         localStorage.setItem('customerToken', data.token);
@@ -117,6 +117,12 @@ export function AuthProvider({ children }) {
     toast.success("Logged out successfully");
   };
 
+  const updateUserLocally = (updatedData) => {
+    const newUserData = { ...user, ...updatedData };
+    setUser(newUserData);
+    localStorage.setItem('customerData', JSON.stringify(newUserData));
+  };
+
   return (
     <AuthContext.Provider value={{
       user,
@@ -126,6 +132,7 @@ export function AuthProvider({ children }) {
       signup,
       googleLogin,
       logout,
+      updateUserLocally,
       isAuthModalOpen,
       setAuthModalOpen
     }}>

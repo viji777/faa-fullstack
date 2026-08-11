@@ -5,14 +5,25 @@ const {
   processCustomerCheckout,
   getCustomers,
   getCustomerById,
-  getCustomerOrders
+  getCustomerOrders,
+  getMe,
+  updateMyProfile,
+  updateMyAddress,
+  updateMyPassword
 } = require('../controllers/customerController');
 
 // Public route for placing orders / saving customer details
 router.post('/checkout', processCustomerCheckout);
 
-// Admin & Support Routes
+// Protected routes (Customer & Admin)
 router.use(protect);
+
+router.get('/me', getMe);
+router.put('/me/profile', updateMyProfile);
+router.put('/me/address', updateMyAddress);
+router.put('/me/password', updateMyPassword);
+
+// Admin & Support Routes
 router.use(adminAndSupport);
 
 router.route('/')
