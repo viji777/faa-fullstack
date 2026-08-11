@@ -95,13 +95,15 @@ const Navbar = () => {
               Products <ChevronDown size={16} className={styles.caretIcon} />
             </Link>
             {dropdownOpen && categories.length > 0 && (
-              <div className={styles.dropdownMenu}>
-                {categories.map(cat => (
-                  <Link key={cat._id} href={`/products?category=${cat._id}`} className={styles.dropdownItem}>
-                    {cat.name}
-                  </Link>
-                ))}
-                <Link href="/products" className={styles.dropdownItemAll}>View All</Link>
+              <div className={styles.dropdownWrapper}>
+                <div className={styles.dropdownMenu}>
+                  {categories.map(cat => (
+                    <Link key={cat._id} href={`/products?category=${cat._id}`} className={styles.dropdownItem}>
+                      {cat.name}
+                    </Link>
+                  ))}
+                  <Link href="/products" className={styles.dropdownItemAll}>View All</Link>
+                </div>
               </div>
             )}
           </div>
