@@ -155,6 +155,17 @@
   position: relative;
 }
 
+/* Invisible bridge to prevent mouseleave when moving from link to menu */
+.dropdownContainer::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  height: 15px;
+  background: transparent;
+}
+
 .dropdownMenu {
   position: absolute;
   top: 100%;
