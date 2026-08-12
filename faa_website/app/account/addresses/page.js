@@ -136,7 +136,7 @@ export default function AddressesPage() {
           />
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
+        <div className={styles.formGrid}>
           <div className={styles.formGroup}>
             <label htmlFor="city">City / Town</label>
             <input 
@@ -165,7 +165,7 @@ export default function AddressesPage() {
           </div>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
+        <div className={styles.formGrid}>
           <div className={styles.formGroup}>
             <label htmlFor="country">Country</label>
             <input 

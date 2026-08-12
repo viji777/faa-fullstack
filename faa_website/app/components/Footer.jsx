@@ -25,22 +25,13 @@ const Footer = () => {
             <h4 className={styles.heading}>Quick Links</h4>
             <ul className={styles.linkList}>
               <li><Link href="/" className={styles.link}>Home</Link></li>
-              <li><Link href="#about" className={styles.link}>About Us</Link></li>
+              <li><Link href="/#about" className={styles.link}>About Us</Link></li>
               <li><Link href="/products" className={styles.link}>Shop All</Link></li>
-              <li><Link href="#benefits" className={styles.link}>Health Benefits</Link></li>
+              <li><Link href="/#benefits" className={styles.link}>Health Benefits</Link></li>
             </ul>
           </div>
           
-          <div className={styles.linksColumn}>
-            <h4 className={styles.heading}>Customer Care</h4>
-            <ul className={styles.linkList}>
-              <li><Link href="/faq" className={styles.link}>FAQ</Link></li>
-              <li><Link href="/shipping" className={styles.link}>Shipping Policy</Link></li>
-              <li><Link href="/returns" className={styles.link}>Returns & Refunds</Link></li>
-              <li><Link href="/privacy" className={styles.link}>Privacy Policy</Link></li>
-            </ul>
-          </div>
-          
+
           <div className={styles.contactColumn}>
             <h4 className={styles.heading}>Contact Us</h4>
             <div className={styles.contactItem}>

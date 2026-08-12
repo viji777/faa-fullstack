@@ -553,4 +553,26 @@
   .cartBtn span:last-child {
     display: none;
   }
+
+  .searchOverlay {
+    padding: 20px;
+    padding-top: 60px;
+  }
+
+  .searchOverlayContainer {
+    flex-direction: column-reverse;
+    gap: 20px;
+  }
+
+  .searchRight {
+    padding-left: 0;
+    width: 100%;
+  }
+
+  .searchLeft {
+    border-right: none;
+    border-top: 1px solid rgba(15, 42, 29, 0.15);
+    padding-right: 0;
+    padding-top: 20px;
+  }
 }

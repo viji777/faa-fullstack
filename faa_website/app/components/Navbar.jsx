@@ -77,14 +77,14 @@ const Navbar = () => {
       <div className={styles.container}>
         <Link href="/" className={styles.logo}>
           <img src="/faa_logo.png" alt="Faa Nuts & Dates" className={styles.logoImg} />
-          <span className={styles.logoText}>Faa Nuts &amp; Hampers</span>
+          <span className={styles.logoText}>Faa Nuts</span>
         </Link>
         
         <div className={styles.navLinks}>
           <Link href="/" className={`${styles.navLink} ${pathname === '/' ? styles.active : ''}`}>
             Home
           </Link>
-          <Link href="#about" className={styles.navLink}>About Us</Link>
+          <Link href="/#about" className={styles.navLink}>About Us</Link>
           
           <div 
             className={styles.dropdownContainer} 
@@ -108,7 +108,7 @@ const Navbar = () => {
             )}
           </div>
           
-          <Link href="#contact" className={styles.navLink}>Contact Us</Link>
+          <Link href="/#contact" className={styles.navLink}>Contact Us</Link>
         </div>
 
         <div className={styles.iconContainer}>
@@ -185,7 +185,7 @@ const Navbar = () => {
       {/* Mobile Menu Overlay */}
       <div className={`${styles.mobileMenuOverlay} ${isMobileMenuOpen ? styles.mobileMenuOpen : ''}`}>
         <div className={styles.mobileMenuHeader}>
-          <span className={styles.logoText}>Faa Nuts &amp; Hampers</span>
+          <span className={styles.logoText}>Faa Nuts</span>
           <button className={styles.closeBtn} onClick={() => setIsMobileMenuOpen(false)}>
             <X size={28} />
           </button>
@@ -194,7 +194,7 @@ const Navbar = () => {
           <Link href="/" className={`${styles.mobileNavLink} ${pathname === '/' ? styles.active : ''}`} onClick={() => setIsMobileMenuOpen(false)}>
             Home
           </Link>
-          <Link href="#about" className={styles.mobileNavLink} onClick={() => setIsMobileMenuOpen(false)}>About Us</Link>
+          <Link href="/#about" className={styles.mobileNavLink} onClick={() => setIsMobileMenuOpen(false)}>About Us</Link>
           
           <div className={styles.mobileDropdownContainer}>
             <div className={styles.mobileDropdownHeader} onClick={() => setDropdownOpen(!dropdownOpen)}>
@@ -210,7 +210,7 @@ const Navbar = () => {
             </div>
           </div>
           
-          <Link href="#contact" className={styles.mobileNavLink} onClick={() => setIsMobileMenuOpen(false)}>Contact Us</Link>
+          <Link href="/#contact" className={styles.mobileNavLink} onClick={() => setIsMobileMenuOpen(false)}>Contact Us</Link>
         </div>
       </div>
     </header>
