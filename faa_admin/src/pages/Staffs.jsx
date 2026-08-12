@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Plus, Edit, Trash2, X } from 'lucide-react';
+import { Plus, Edit, Trash2, X, Eye, EyeOff } from 'lucide-react';
 import toast from 'react-hot-toast';
 import '../pages/Dashboard.css';
 
@@ -16,6 +16,7 @@ const Staffs = () => {
   // Form state
   const [formData, setFormData] = useState({ name: '', email: '', password: '' });
   const [formLoading, setFormLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const getAuthHeaders = () => {
     const token = localStorage.getItem('token') || sessionStorage.getItem('token');
@@ -49,6 +50,7 @@ const Staffs = () => {
       setCurrentStaffId(null);
       setFormData({ name: '', email: '', password: '' });
     }
+    setShowPassword(false);
     setIsModalOpen(true);
   };
 
@@ -175,7 +177,37 @@ const Staffs = () => {
               </div>
               <div>
                 <label style={labelStyle}>{modalMode === 'add' ? 'Password *' : 'New Password (Optional)'}</label>
-                <input type="password" name="password" value={formData.password} onChange={handleInputChange} className="modern-input" required={modalMode === 'add'} />
+                <div style={{ position: 'relative' }}>
+                  <input 
+                    type={showPassword ? "text" : "password"} 
+                    name="password" 
+                    value={formData.password} 
+                    onChange={handleInputChange} 
+                    className="modern-input" 
+                    required={modalMode === 'add'} 
+                    style={{ paddingRight: '2.5rem' }}
+                  />
+                  <button 
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    style={{
+                      position: 'absolute',
+                      right: '0.75rem',
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      background: 'none',
+                      border: 'none',
+                      cursor: 'pointer',
+                      color: '#94a3b8',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      padding: 0
+                    }}
+                  >
+                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </button>
+                </div>
               </div>
 
               <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '1rem', marginTop: '1rem' }}>
