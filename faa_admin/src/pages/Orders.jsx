@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
-import { Eye, X } from 'lucide-react';
+import { Eye, X, Search } from 'lucide-react';
 import '../pages/Dashboard.css';
 
 const Orders = () => {
@@ -9,8 +9,37 @@ const Orders = () => {
   const [loading, setLoading] = useState(true);
   const [selectedOrder, setSelectedOrder] = useState(null);
   
+  // Filter States
+  const [searchTerm, setSearchTerm] = useState('');
+  const [statusFilter, setStatusFilter] = useState('');
+  const [dateFilter, setDateFilter] = useState('');
+  
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
+
+  // Reset pagination when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm, statusFilter, dateFilter]);
+
+  const filteredOrders = orders.filter(order => {
+    // 1. Search Match (Order ID or Customer Name)
+    const searchMatch = searchTerm === '' || 
+      order._id.toLowerCase().includes(searchTerm.toLowerCase()) || 
+      (order.shippingAddress?.name || order.user?.name || '').toLowerCase().includes(searchTerm.toLowerCase());
+    
+    // 2. Status Match
+    const statusMatch = statusFilter === '' || order.status === statusFilter;
+    
+    // 3. Date Match
+    let dateMatch = true;
+    if (dateFilter) {
+      const orderDate = new Date(order.createdAt).toISOString().split('T')[0];
+      dateMatch = orderDate === dateFilter;
+    }
+    
+    return searchMatch && statusMatch && dateMatch;
+  });
 
   const getAuthHeaders = () => {
     const token = localStorage.getItem('token') || sessionStorage.getItem('token');
@@ -58,6 +87,59 @@ const Orders = () => {
         </div>
       </header>
 
+      {/* Filter Bar */}
+      <div className="filters-container" style={{ background: '#f8fafc', border: '1px solid #e2e8f0', marginTop: '1rem' }}>
+        <div className="filter-controls">
+          <div style={{ position: 'relative', flex: '1', minWidth: '250px' }}>
+            <Search size={18} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' }} />
+            <input 
+              type="text" 
+              className="modern-input" 
+              placeholder="Search by Order ID or Name..." 
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              style={{ paddingLeft: '2.5rem', background: '#fff' }}
+            />
+          </div>
+          
+          <select 
+            className="filter-select" 
+            value={statusFilter}
+            onChange={(e) => setStatusFilter(e.target.value)}
+            style={{ padding: '0.75rem 1rem', minWidth: '150px' }}
+          >
+            <option value="">All Statuses</option>
+            <option value="Pending">Pending</option>
+            <option value="Processing">Processing</option>
+            <option value="Shipped">Shipped</option>
+            <option value="Delivered">Delivered</option>
+            <option value="Cancelled">Cancelled</option>
+          </select>
+          
+          <input 
+            type="date" 
+            className="filter-date" 
+            value={dateFilter}
+            onChange={(e) => setDateFilter(e.target.value)}
+            style={{ padding: '0.75rem 1rem' }}
+          />
+          
+          {(searchTerm || statusFilter || dateFilter) && (
+            <button 
+              className="btn-clear" 
+              onClick={() => {
+                setSearchTerm('');
+                setStatusFilter('');
+                setDateFilter('');
+              }}
+              style={{ padding: '0.75rem 1rem', fontSize: '0.85rem' }}
+            >
+              Clear Filters
+            </button>
+          )}
+        </div>
+      </div>
+
       <div className="dashboard-content" style={{ marginTop: '1rem' }}>
         <div style={{ padding: '0' }}>
           {loading ? (
@@ -79,7 +161,7 @@ const Orders = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {orders.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map((order, idx) => {
+                  {filteredOrders.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map((order, idx) => {
                     const serialNumber = (currentPage - 1) * itemsPerPage + idx + 1;
                     return (
                     <tr key={order._id}>
@@ -137,7 +219,7 @@ const Orders = () => {
             </div>
           )}
           
-          {Math.ceil(orders.length / itemsPerPage) > 1 && (
+          {Math.ceil(filteredOrders.length / itemsPerPage) > 1 && (
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '1rem', marginTop: '1.5rem' }}>
               <button 
                 disabled={currentPage === 1} 
@@ -147,12 +229,12 @@ const Orders = () => {
                 Previous
               </button>
               <span style={{ fontSize: '0.9rem', color: '#64748b', fontWeight: 600 }}>
-                Page {currentPage} of {Math.ceil(orders.length / itemsPerPage)}
+                Page {currentPage} of {Math.ceil(filteredOrders.length / itemsPerPage)}
               </span>
               <button 
-                disabled={currentPage === Math.ceil(orders.length / itemsPerPage)} 
+                disabled={currentPage === Math.ceil(filteredOrders.length / itemsPerPage)} 
                 onClick={() => setCurrentPage(p => p + 1)}
-                style={{ padding: '0.5rem 1rem', borderRadius: '8px', border: '1px solid #e2e8f0', background: currentPage === Math.ceil(orders.length / itemsPerPage) ? '#f8fafc' : '#fff', cursor: currentPage === Math.ceil(orders.length / itemsPerPage) ? 'not-allowed' : 'pointer', color: currentPage === Math.ceil(orders.length / itemsPerPage) ? '#94a3b8' : '#334155', fontWeight: 600 }}
+                style={{ padding: '0.5rem 1rem', borderRadius: '8px', border: '1px solid #e2e8f0', background: currentPage === Math.ceil(filteredOrders.length / itemsPerPage) ? '#f8fafc' : '#fff', cursor: currentPage === Math.ceil(filteredOrders.length / itemsPerPage) ? 'not-allowed' : 'pointer', color: currentPage === Math.ceil(filteredOrders.length / itemsPerPage) ? '#94a3b8' : '#334155', fontWeight: 600 }}
               >
                 Next
               </button>
