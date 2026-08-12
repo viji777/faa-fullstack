@@ -26,7 +26,7 @@ const Orders = () => {
   const filteredOrders = orders.filter(order => {
     // 1. Search Match (Order ID, Customer Name, or Phone)
     const searchMatch = searchTerm === '' || 
-      order._id.toLowerCase().includes(searchTerm.toLowerCase()) || 
+      order._id.substring(order._id.length - 6).toLowerCase().includes(searchTerm.toLowerCase()) || 
       (order.shippingAddress?.name || order.user?.name || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
       (order.shippingAddress?.phone || '').includes(searchTerm);
     
