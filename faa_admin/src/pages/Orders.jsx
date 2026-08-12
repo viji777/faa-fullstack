@@ -18,6 +18,8 @@ const Orders = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
+  const dateError = fromDate && toDate && fromDate > toDate ? "From Date cannot be later than To Date" : "";
+
   // Reset pagination when filters change
   useEffect(() => {
     setCurrentPage(1);
@@ -160,12 +162,19 @@ const Orders = () => {
             </button>
           )}
         </div>
+        {dateError && (
+          <div style={{ color: '#ef4444', fontSize: '0.85rem', fontWeight: 600, marginTop: '0.5rem', marginLeft: '0.5rem' }}>
+            {dateError}
+          </div>
+        )}
       </div>
 
       <div className="dashboard-content" style={{ marginTop: '1rem' }}>
         <div style={{ padding: '0' }}>
           {loading ? (
             <p>Loading orders...</p>
+          ) : dateError ? (
+            <p className="no-data" style={{ color: '#ef4444' }}>Please fix the date filter to view orders.</p>
           ) : orders.length === 0 ? (
             <p className="no-data">No orders found.</p>
           ) : (
