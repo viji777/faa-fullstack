@@ -545,20 +545,25 @@
   }
   
   .iconContainer {
-    gap: 6px;
+    gap: 4px;
+    flex-shrink: 0;
   }
 
   .iconBtnBox {
     width: 32px;
     height: 32px;
+    flex-shrink: 0;
+    padding: 4px; /* Ensure icons aren't too big */
   }
   
   .cartBtn {
-    padding: 0 8px;
+    padding: 0 6px;
     height: 32px;
+    min-width: 36px;
+    flex-shrink: 0;
   }
   
-  .cartBtn span:last-child {
+  .cartBtn > span {
     display: none;
   }
 
