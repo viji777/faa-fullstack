@@ -251,7 +251,8 @@ const Products = () => {
               <table className="modern-table">
                 <thead style={{ background: 'var(--accent-primary)', borderRadius: '12px' }}>
                   <tr>
-                    <th style={{ color: 'white', padding: '1rem', borderTopLeftRadius: '12px', borderBottomLeftRadius: '12px', width: '60px', textAlign: 'center' }}>Img</th>
+                    <th style={{ color: 'white', padding: '1rem', borderTopLeftRadius: '12px', borderBottomLeftRadius: '12px', width: '60px', textAlign: 'center' }}>S.No</th>
+                    <th style={{ color: 'white', padding: '1rem', width: '60px', textAlign: 'center' }}>Img</th>
                     <th style={{ color: 'white', padding: '1rem' }}>Name & Category</th>
                     <th style={{ color: 'white', padding: '1rem' }}>Price (Starting)</th>
                     <th style={{ color: 'white', padding: '1rem' }}>Status</th>
@@ -259,12 +260,14 @@ const Products = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {products.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map(product => {
+                  {products.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map((product, idx) => {
                     const primaryImg = product.images?.find(img => img.isPrimary) || product.images?.[0];
                     const minPrice = product.variants?.length ? Math.min(...product.variants.map(v => v.price)) : 0;
+                    const serialNumber = (currentPage - 1) * itemsPerPage + idx + 1;
                     
                     return (
                       <tr key={product._id}>
+                        <td style={{ textAlign: 'center', fontWeight: '600', color: 'var(--text-secondary)' }}>{serialNumber}</td>
                         <td>
                           {primaryImg ? (
                             <img src={primaryImg.url} alt={product.name} style={{ width: '50px', height: '50px', objectFit: 'cover', borderRadius: '8px', border: '1px solid rgba(10,39,29,0.1)' }} />

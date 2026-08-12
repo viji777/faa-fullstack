@@ -253,7 +253,8 @@ const Banners = () => {
               <table className="modern-table">
                 <thead style={{ background: 'var(--accent-primary)', borderRadius: '12px' }}>
                   <tr>
-                    <th style={{ color: 'white', padding: '1rem', borderTopLeftRadius: '12px', borderBottomLeftRadius: '12px' }}>Order</th>
+                    <th style={{ color: 'white', padding: '1rem', borderTopLeftRadius: '12px', borderBottomLeftRadius: '12px', width: '60px', textAlign: 'center' }}>S.No</th>
+                    <th style={{ color: 'white', padding: '1rem' }}>Order</th>
                     <th style={{ color: 'white', padding: '1rem' }}>Image</th>
                     <th style={{ color: 'white', padding: '1rem' }}>Title</th>
                     <th style={{ color: 'white', padding: '1rem' }}>Link Type</th>
@@ -262,8 +263,9 @@ const Banners = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {banners.map(banner => (
+                  {banners.map((banner, index) => (
                     <tr key={banner._id}>
+                      <td style={{ textAlign: 'center', fontWeight: '600', color: 'var(--text-secondary)' }}>{index + 1}</td>
                       <td><span className="order-id">#{banner.order}</span></td>
                       <td>
                         <img src={banner.image} alt={banner.title || 'Banner'} style={{ height: '50px', borderRadius: '4px', objectFit: 'cover' }} />

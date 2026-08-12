@@ -69,7 +69,8 @@ const Orders = () => {
               <table className="modern-table">
                 <thead style={{ background: 'var(--accent-primary)', borderRadius: '12px' }}>
                   <tr>
-                    <th style={{ color: 'white', padding: '1rem', borderTopLeftRadius: '12px', borderBottomLeftRadius: '12px' }}>Order ID</th>
+                    <th style={{ color: 'white', padding: '1rem', borderTopLeftRadius: '12px', borderBottomLeftRadius: '12px', width: '60px', textAlign: 'center' }}>S.No</th>
+                    <th style={{ color: 'white', padding: '1rem' }}>Order ID</th>
                     <th style={{ color: 'white', padding: '1rem' }}>Customer</th>
                     <th style={{ color: 'white', padding: '1rem' }}>Date</th>
                     <th style={{ color: 'white', padding: '1rem' }}>Total Amount</th>
@@ -78,8 +79,11 @@ const Orders = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {orders.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map((order) => (
+                  {orders.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map((order, idx) => {
+                    const serialNumber = (currentPage - 1) * itemsPerPage + idx + 1;
+                    return (
                     <tr key={order._id}>
+                      <td style={{ textAlign: 'center', fontWeight: '600', color: 'var(--text-secondary)' }}>{serialNumber}</td>
                       <td style={{ fontWeight: 600, color: 'var(--accent-secondary)' }}>
                         <span className="order-id">#{order._id.substring(order._id.length - 6).toUpperCase()}</span>
                       </td>
@@ -127,7 +131,7 @@ const Orders = () => {
                         </select>
                       </td>
                     </tr>
-                  ))}
+                  )})}
                 </tbody>
               </table>
             </div>
