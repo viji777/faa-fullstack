@@ -23,7 +23,7 @@ export default function ProductsClient({
   const [maxPrice, setMaxPrice] = useState(searchParams.maxPrice || '');
 
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 8;
+  const itemsPerPage = 16;
 
   // Reset to page 1 when filters change
   useEffect(() => {
