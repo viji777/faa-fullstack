@@ -226,6 +226,10 @@ exports.login = async (req, res) => {
       return res.status(401).json({ message: 'Please verify your email first' });
     }
 
+    if (user.role === 3) {
+      return res.status(403).json({ message: 'Access denied: Customers cannot access the admin panel.' });
+    }
+
     const isMatch = await user.matchPassword(password);
 
     if (user && isMatch) {
@@ -396,10 +400,6 @@ exports.customerLogin = async (req, res) => {
       return res.status(401).json({ message: 'Invalid email or password' });
     }
 
-    if (user.role !== 3) {
-      return res.status(403).json({ message: 'Please use the Admin/Support login portal.' });
-    }
-
     const isMatch = await user.matchPassword(password);
 
     if (user && isMatch) {
@@ -442,9 +442,6 @@ exports.customerGoogleLogin = async (req, res) => {
 
     if (user) {
       // User exists, just log them in
-      if (user.role !== 3) {
-        return res.status(403).json({ message: 'Email is registered as Admin/Support. Please use the Admin portal.' });
-      }
       
       res.json({
         _id: user.id,

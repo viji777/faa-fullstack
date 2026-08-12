@@ -317,8 +317,11 @@
 
 /* Table */
 .table-responsive {
+  width: 100%;
+  max-width: 100%;
   overflow-x: auto;
   margin-top: 1rem;
+  -webkit-overflow-scrolling: touch;
 }
 
 .modern-table {
