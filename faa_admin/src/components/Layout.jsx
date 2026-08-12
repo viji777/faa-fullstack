@@ -62,10 +62,6 @@ const Layout = () => {
       <main className="main-content">
         {/* Header */}
         <header className="top-header">
-          <div className="search-bar">
-            <Search size={20} className="text-muted" />
-            <input type="text" autoComplete="off" placeholder="Search anything..." />
-          </div>
           
           <div className="header-actions">
 
