@@ -12,7 +12,8 @@ const Orders = () => {
   // Filter States
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
-  const [dateFilter, setDateFilter] = useState('');
+  const [fromDate, setFromDate] = useState('');
+  const [toDate, setToDate] = useState('');
   
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
@@ -20,22 +21,28 @@ const Orders = () => {
   // Reset pagination when filters change
   useEffect(() => {
     setCurrentPage(1);
-  }, [searchTerm, statusFilter, dateFilter]);
+  }, [searchTerm, statusFilter, fromDate, toDate]);
 
   const filteredOrders = orders.filter(order => {
-    // 1. Search Match (Order ID or Customer Name)
+    // 1. Search Match (Order ID, Customer Name, or Phone)
     const searchMatch = searchTerm === '' || 
       order._id.toLowerCase().includes(searchTerm.toLowerCase()) || 
-      (order.shippingAddress?.name || order.user?.name || '').toLowerCase().includes(searchTerm.toLowerCase());
+      (order.shippingAddress?.name || order.user?.name || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (order.shippingAddress?.phone || '').includes(searchTerm);
     
     // 2. Status Match
     const statusMatch = statusFilter === '' || order.status === statusFilter;
     
-    // 3. Date Match
+    // 3. Date Match (From / To)
     let dateMatch = true;
-    if (dateFilter) {
-      const orderDate = new Date(order.createdAt).toISOString().split('T')[0];
-      dateMatch = orderDate === dateFilter;
+    const orderDate = new Date(order.createdAt).toISOString().split('T')[0];
+    
+    if (fromDate && toDate) {
+      dateMatch = orderDate >= fromDate && orderDate <= toDate;
+    } else if (fromDate) {
+      dateMatch = orderDate >= fromDate;
+    } else if (toDate) {
+      dateMatch = orderDate <= toDate;
     }
     
     return searchMatch && statusMatch && dateMatch;
@@ -95,7 +102,7 @@ const Orders = () => {
             <input 
               type="text" 
               className="modern-input" 
-              placeholder="Search by Order ID or Name..." 
+              placeholder="Search by Order ID, Name, or Phone..." 
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               style={{ paddingLeft: '2.5rem', background: '#fff' }}
@@ -116,21 +123,36 @@ const Orders = () => {
             <option value="Cancelled">Cancelled</option>
           </select>
           
-          <input 
-            type="date" 
-            className="filter-date" 
-            value={dateFilter}
-            onChange={(e) => setDateFilter(e.target.value)}
-            style={{ padding: '0.75rem 1rem' }}
-          />
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <span style={{ fontSize: '0.8rem', color: '#64748b', fontWeight: 600 }}>From</span>
+            <input 
+              type="date" 
+              className="filter-date" 
+              value={fromDate}
+              onChange={(e) => setFromDate(e.target.value)}
+              style={{ padding: '0.75rem 1rem' }}
+            />
+          </div>
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <span style={{ fontSize: '0.8rem', color: '#64748b', fontWeight: 600 }}>To</span>
+            <input 
+              type="date" 
+              className="filter-date" 
+              value={toDate}
+              onChange={(e) => setToDate(e.target.value)}
+              style={{ padding: '0.75rem 1rem' }}
+            />
+          </div>
           
-          {(searchTerm || statusFilter || dateFilter) && (
+          {(searchTerm || statusFilter || fromDate || toDate) && (
             <button 
               className="btn-clear" 
               onClick={() => {
                 setSearchTerm('');
                 setStatusFilter('');
-                setDateFilter('');
+                setFromDate('');
+                setToDate('');
               }}
               style={{ padding: '0.75rem 1rem', fontSize: '0.85rem' }}
             >
