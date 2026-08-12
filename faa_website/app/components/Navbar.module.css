@@ -532,22 +532,30 @@
     display: none;
   }
   
+  .container {
+    padding: 12px 10px;
+  }
+
   .logoImg {
-    height: 40px;
+    height: 36px;
   }
   
   .logoText {
-    font-size: 18px;
+    font-size: 16px;
   }
   
+  .iconContainer {
+    gap: 6px;
+  }
+
   .iconBtnBox {
-    width: 36px;
-    height: 36px;
+    width: 32px;
+    height: 32px;
   }
   
   .cartBtn {
-    padding: 0 12px;
-    height: 36px;
+    padding: 0 8px;
+    height: 32px;
   }
   
   .cartBtn span:last-child {
