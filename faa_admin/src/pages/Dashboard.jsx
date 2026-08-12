@@ -92,8 +92,8 @@ const Dashboard = () => {
     revenue: item.revenue
   }));
 
-  // Colors for Pie Chart - Using Brand Gold palette variations
-  const PIE_COLORS = ['#d4af37', '#b8860b', '#f5deb3', '#8b6508', '#e6c200'];
+  // Colors for Pie Chart - Modern vibrant industry palette (Blue, Emerald, Orange, Purple, Pink, Cyan)
+  const PIE_COLORS = ['#3b82f6', '#10b981', '#f59e0b', '#8b5cf6', '#ec4899', '#06b6d4'];
 
   // Calculate Order Ratio Percentage
   const totalRatioOrders = stats.orderRatio.success + stats.orderRatio.cancelled;
@@ -164,16 +164,16 @@ const Dashboard = () => {
           <div className="chart-wrapper">
             <ResponsiveContainer width="100%" height={300}>
               <LineChart data={chartData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(212, 175, 55, 0.1)" />
-                <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fill: '#a0aec0'}} dy={10} />
-                <YAxis axisLine={false} tickLine={false} tick={{fill: '#a0aec0'}} dx={-10} />
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(0, 0, 0, 0.05)" />
+                <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fill: '#64748b'}} dy={10} />
+                <YAxis axisLine={false} tickLine={false} tick={{fill: '#64748b'}} dx={-10} />
                 <RechartsTooltip 
-                  contentStyle={{ backgroundColor: '#05140f', borderRadius: '8px', border: '1px solid #d4af37', boxShadow: '0 4px 15px rgba(212,175,55,0.2)' }}
-                  labelStyle={{ color: '#ffffff' }}
+                  contentStyle={{ backgroundColor: '#ffffff', borderRadius: '12px', border: 'none', boxShadow: '0 10px 25px rgba(0,0,0,0.1)' }}
+                  labelStyle={{ color: '#334155', fontWeight: 700, marginBottom: '4px' }}
                   formatter={(value) => [`₹${value}`, 'Revenue']}
-                  itemStyle={{color: '#d4af37'}}
+                  itemStyle={{color: '#6366f1', fontWeight: 600}}
                 />
-                <Line type="monotone" dataKey="revenue" stroke="#d4af37" strokeWidth={3} dot={{r: 4, fill: '#d4af37', strokeWidth: 2, stroke: '#05140f'}} activeDot={{r: 6}} />
+                <Line type="monotone" dataKey="revenue" stroke="#6366f1" strokeWidth={4} dot={{r: 4, fill: '#6366f1', strokeWidth: 2, stroke: '#ffffff'}} activeDot={{r: 7, strokeWidth: 2, stroke: '#ffffff'}} />
               </LineChart>
             </ResponsiveContainer>
           </div>
@@ -201,11 +201,11 @@ const Dashboard = () => {
                     ))}
                   </Pie>
                   <RechartsTooltip 
-                    contentStyle={{ backgroundColor: '#05140f', borderRadius: '8px', border: '1px solid #d4af37' }}
+                    contentStyle={{ backgroundColor: '#ffffff', borderRadius: '12px', border: 'none', boxShadow: '0 10px 25px rgba(0,0,0,0.1)' }}
                     formatter={(value) => [`₹${value}`, 'Sales']}
-                    itemStyle={{color: '#fff'}}
+                    itemStyle={{color: '#334155', fontWeight: 600}}
                   />
-                  <Legend verticalAlign="bottom" height={36} wrapperStyle={{color: '#a0aec0', fontSize: '0.85rem'}} />
+                  <Legend verticalAlign="bottom" height={36} wrapperStyle={{color: '#64748b', fontSize: '0.85rem', fontWeight: 500}} />
                 </PieChart>
               </ResponsiveContainer>
             ) : (
