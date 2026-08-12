@@ -169,6 +169,7 @@ const Dashboard = () => {
                 <YAxis axisLine={false} tickLine={false} tick={{fill: '#a0aec0'}} dx={-10} />
                 <RechartsTooltip 
                   contentStyle={{ backgroundColor: '#05140f', borderRadius: '8px', border: '1px solid #d4af37', boxShadow: '0 4px 15px rgba(212,175,55,0.2)' }}
+                  labelStyle={{ color: '#ffffff' }}
                   formatter={(value) => [`₹${value}`, 'Revenue']}
                   itemStyle={{color: '#d4af37'}}
                 />
