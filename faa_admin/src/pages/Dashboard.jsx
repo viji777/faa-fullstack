@@ -19,7 +19,7 @@ const Dashboard = () => {
   const fetchStats = async () => {
     setLoading(true);
     try {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem('token') || sessionStorage.getItem('token');
       const config = token ? { headers: { Authorization: `Bearer ${token}` } } : {};
       
       // Build Query String
