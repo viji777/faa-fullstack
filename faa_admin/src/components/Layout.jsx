@@ -68,10 +68,7 @@ const Layout = () => {
           </div>
           
           <div className="header-actions">
-            <button className="icon-btn">
-              <Bell size={20} />
-              <span className="badge-indicator"></span>
-            </button>
+
             <div className="user-profile">
               <img src="https://ui-avatars.com/api/?name=Admin+User&background=4338ca&color=fff" alt="Admin" />
               <div className="user-info">
