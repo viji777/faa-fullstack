@@ -189,10 +189,10 @@ const GlobalSettings = () => {
       <div className="dashboard-content" style={{ marginTop: '2rem', maxWidth: '800px', display: 'flex', flexDirection: 'column', gap: '2rem' }}>
         <form onSubmit={handleGlobalSubmit} style={{ background: '#fff', padding: '2rem', borderRadius: '12px', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)' }}>
           
-          <h3 style={{ marginBottom: '1.5rem', color: 'var(--text-primary)', borderBottom: '1px solid #e2e8f0', paddingBottom: '0.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <h3 style={{ marginBottom: '1.5rem', color: 'var(--text-primary)', backgroundColor: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '8px', padding: '1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             Logo Configuration
             {!isEditingGlobal && (
-              <button type="button" onClick={() => setIsEditingGlobal(true)} style={{ background: '#f1f5f9', border: '1px solid #cbd5e1', padding: '0.4rem 1rem', borderRadius: '6px', cursor: 'pointer', fontSize: '0.9rem', color: '#475569', fontWeight: '600' }}>
+              <button type="button" onClick={() => setIsEditingGlobal(true)} style={{ background: '#fff', border: '1px solid #cbd5e1', padding: '0.4rem 1rem', borderRadius: '6px', cursor: 'pointer', fontSize: '0.9rem', color: '#475569', fontWeight: '600', boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)' }}>
                 Edit Settings
               </button>
             )}
@@ -223,7 +223,7 @@ const GlobalSettings = () => {
             </div>
           </div>
 
-          <h3 style={{ marginBottom: '1.5rem', color: 'var(--text-primary)', borderBottom: '1px solid #e2e8f0', paddingBottom: '0.5rem' }}>Contact Information</h3>
+          <h3 style={{ marginBottom: '1.5rem', color: 'var(--text-primary)', backgroundColor: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '8px', padding: '1rem' }}>Contact Information</h3>
 
           <div className="form-group" style={{ marginBottom: '1.5rem' }}>
             <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '600', color: 'var(--text-secondary)' }}>Contact Phone Number (For WhatsApp & Calls)</label>
@@ -278,10 +278,10 @@ const GlobalSettings = () => {
         </form>
 
         <form onSubmit={handleProfileSubmit} style={{ background: '#fff', padding: '2rem', borderRadius: '12px', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)' }}>
-          <h3 style={{ marginBottom: '1.5rem', color: 'var(--text-primary)', borderBottom: '1px solid #e2e8f0', paddingBottom: '0.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <h3 style={{ marginBottom: '1.5rem', color: 'var(--text-primary)', backgroundColor: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '8px', padding: '1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             Admin Profile Credentials
             {!isEditingProfile && (
-              <button type="button" onClick={() => setIsEditingProfile(true)} style={{ background: '#f1f5f9', border: '1px solid #cbd5e1', padding: '0.4rem 1rem', borderRadius: '6px', cursor: 'pointer', fontSize: '0.9rem', color: '#475569', fontWeight: '600' }}>
+              <button type="button" onClick={() => setIsEditingProfile(true)} style={{ background: '#fff', border: '1px solid #cbd5e1', padding: '0.4rem 1rem', borderRadius: '6px', cursor: 'pointer', fontSize: '0.9rem', color: '#475569', fontWeight: '600', boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)' }}>
                 Edit Profile
               </button>
             )}
