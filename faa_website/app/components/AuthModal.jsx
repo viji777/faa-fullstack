@@ -74,13 +74,16 @@ const AuthModal = () => {
     setLoading(true);
     try {
       if (isLogin) {
-        await login(formData.email, formData.password);
-        toast.success('Logged in successfully!');
+        const res = await login(formData.email, formData.password);
+        if (res.success) {
+          setAuthModalOpen(false);
+        }
       } else {
-        await signup(formData.name, formData.email, formData.password, formData.phone);
-        toast.success('Account created successfully!');
+        const res = await signup(formData.name, formData.email, formData.password, formData.phone);
+        if (res.success) {
+          setAuthModalOpen(false);
+        }
       }
-      setAuthModalOpen(false);
     } catch (err) {
       toast.error(err.message || 'Authentication failed');
     } finally {
