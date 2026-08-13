@@ -73,7 +73,22 @@ const Orders = () => {
 
   const handleStatusChange = async (orderId, newStatus) => {
     try {
-      await axios.put(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/orders/${orderId}/status`, { status: newStatus }, getAuthHeaders());
+      let shipmentReference = undefined;
+
+      if (newStatus === 'Shipped') {
+        const reference = window.prompt("Enter Shipment Reference (e.g., ST Courier, 4545454545455):");
+        // If the admin clicks "Cancel" on the prompt, abort the status change
+        if (reference === null) {
+          return;
+        }
+        shipmentReference = reference;
+      }
+
+      await axios.put(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/orders/${orderId}/status`, { 
+        status: newStatus,
+        shipmentReference
+      }, getAuthHeaders());
+      
       toast.success('Order status updated');
       fetchOrders();
     } catch (error) {
@@ -297,6 +312,15 @@ const Orders = () => {
                   </div>
                 </div>
               </div>
+              
+              {selectedOrder.shipmentReference && (
+                <div>
+                  <h4 style={{ color: 'var(--accent-primary)', marginBottom: '0.5rem' }}>Shipment Reference</h4>
+                  <div style={{ background: '#f8fafc', padding: '1rem', borderRadius: '8px' }}>
+                    <strong>{selectedOrder.shipmentReference}</strong>
+                  </div>
+                </div>
+              )}
               
               <div>
                 <h4 style={{ color: 'var(--accent-primary)', marginBottom: '0.5rem' }}>Order Items</h4>

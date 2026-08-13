@@ -52,6 +52,9 @@ const orderSchema = new mongoose.Schema({
     required: true,
     enum: ['Pending', 'Payment Received', 'Processing', 'Shipped', 'Delivered', 'Cancelled'],
     default: 'Pending'
+  },
+  shipmentReference: {
+    type: String
   }
 }, { timestamps: true });
 

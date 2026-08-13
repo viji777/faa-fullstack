@@ -106,6 +106,13 @@ export default function MyOrdersPage() {
                   ))}
                 </div>
                 
+                {order.shipmentReference && (
+                  <div className={styles.shipmentRef}>
+                    <span className={styles.shipmentRefLabel}>Shipment Reference:</span>
+                    <span className={styles.shipmentRefText}>{order.shipmentReference}</span>
+                  </div>
+                )}
+                
                 <div className={styles.orderFooter}>
                   <span className={styles.totalLabel}>Total Amount:</span>
                   <span className={styles.totalAmount}>₹{order.totalAmount}</span>

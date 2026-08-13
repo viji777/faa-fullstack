@@ -138,7 +138,7 @@ exports.getMyOrders = async (req, res) => {
 // @access  Private (Admin & Support)
 exports.updateOrderStatus = async (req, res) => {
   try {
-    const { status } = req.body;
+    const { status, shipmentReference } = req.body;
     const order = await Order.findById(req.params.id);
 
     if (!order) {
@@ -146,6 +146,9 @@ exports.updateOrderStatus = async (req, res) => {
     }
 
     order.status = status;
+    if (shipmentReference !== undefined) {
+      order.shipmentReference = shipmentReference;
+    }
     await order.save();
 
     res.status(200).json(order);
