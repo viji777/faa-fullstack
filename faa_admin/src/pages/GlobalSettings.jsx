@@ -11,8 +11,20 @@ const GlobalSettings = () => {
   const [logoImageId, setLogoImageId] = useState('');
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
-  const [loading, setLoading] = useState(false);
+  
+  // Admin Profile State
+  const [adminName, setAdminName] = useState('');
+  const [adminEmail, setAdminEmail] = useState('');
+  const [adminPhone, setAdminPhone] = useState('');
+  const [adminPassword, setAdminPassword] = useState('');
+  
+  const [loadingGlobal, setLoadingGlobal] = useState(false);
+  const [loadingProfile, setLoadingProfile] = useState(false);
   const [fetching, setFetching] = useState(true);
+  
+  // Edit mode states
+  const [isEditingGlobal, setIsEditingGlobal] = useState(false);
+  const [isEditingProfile, setIsEditingProfile] = useState(false);
 
   const getAuthHeaders = () => {
     const token = localStorage.getItem('token') || sessionStorage.getItem('token');
@@ -21,6 +33,16 @@ const GlobalSettings = () => {
 
   useEffect(() => {
     fetchSettings();
+    
+    // Load admin profile from local storage
+    const userInfoStr = localStorage.getItem('userInfo') || sessionStorage.getItem('userInfo');
+    if (userInfoStr) {
+      try {
+        const userInfo = JSON.parse(userInfoStr);
+        setAdminName(userInfo.name || '');
+        setAdminEmail(userInfo.email || '');
+      } catch (err) {}
+    }
   }, []);
 
   const fetchSettings = async () => {
@@ -68,9 +90,9 @@ const GlobalSettings = () => {
     return res.data;
   };
 
-  const handleSubmit = async (e) => {
+  const handleGlobalSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    setLoadingGlobal(true);
     
     try {
       let finalLogoUrl = logoUrl;
@@ -93,11 +115,62 @@ const GlobalSettings = () => {
       
       toast.success('Settings updated successfully!');
       fetchSettings();
+      setIsEditingGlobal(false);
     } catch (error) {
       toast.error(error.response?.data?.message || 'Failed to update settings');
     } finally {
-      setLoading(false);
+      setLoadingGlobal(false);
     }
+  };
+
+  const handleProfileSubmit = async (e) => {
+    e.preventDefault();
+    setLoadingProfile(true);
+    
+    try {
+      const payload = {
+        name: adminName,
+        email: adminEmail,
+      };
+      
+      if (adminPhone) payload.phone = adminPhone;
+      if (adminPassword) payload.password = adminPassword;
+
+      const res = await axios.put(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/admin/roles/profile`, payload, getAuthHeaders());
+      
+      // Update local storage with new name/email
+      const userInfoStr = localStorage.getItem('userInfo') || sessionStorage.getItem('userInfo');
+      if (userInfoStr) {
+        try {
+          const userInfo = JSON.parse(userInfoStr);
+          userInfo.name = res.data.name;
+          userInfo.email = res.data.email;
+          if (localStorage.getItem('userInfo')) {
+            localStorage.setItem('userInfo', JSON.stringify(userInfo));
+          } else {
+            sessionStorage.setItem('userInfo', JSON.stringify(userInfo));
+          }
+        } catch (err) {}
+      }
+
+      toast.success('Admin Profile updated successfully!');
+      setAdminPassword(''); // clear password after success
+      setIsEditingProfile(false);
+    } catch (error) {
+      toast.error(error.response?.data?.message || 'Failed to update admin profile');
+    } finally {
+      setLoadingProfile(false);
+    }
+  };
+
+  // Helper to safely display the logo (if it's a relative path, we show a generic icon or prefix with website URL if known)
+  // For now, if it's a relative path, we can assume it's the default logo and let it break or handle gracefully
+  const renderLogoPreview = () => {
+    if (!imagePreview) return <span style={{ color: '#94a3b8', fontSize: '0.9rem' }}>No Logo</span>;
+    
+    // If it's a relative path from the Next.js app, it might break on the admin Vite app. 
+    // We could try to render it, but if it fails, maybe we show alt text.
+    return <img src={imagePreview} alt="Logo Preview" style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }} onError={(e) => { e.target.onerror = null; e.target.style.display = 'none'; e.target.parentElement.innerHTML = '<span style="color: #94a3b8; font-size: 0.9rem">Default Logo</span>'; }} />;
   };
 
   if (fetching) {
@@ -113,22 +186,26 @@ const GlobalSettings = () => {
         </div>
       </header>
 
-      <div className="dashboard-content" style={{ marginTop: '2rem', maxWidth: '800px' }}>
-        <form onSubmit={handleSubmit} style={{ background: '#fff', padding: '2rem', borderRadius: '12px', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)' }}>
+      <div className="dashboard-content" style={{ marginTop: '2rem', maxWidth: '800px', display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+        <form onSubmit={handleGlobalSubmit} style={{ background: '#fff', padding: '2rem', borderRadius: '12px', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)' }}>
           
-          <h3 style={{ marginBottom: '1.5rem', color: 'var(--text-primary)', borderBottom: '1px solid #e2e8f0', paddingBottom: '0.5rem' }}>Logo Configuration</h3>
+          <h3 style={{ marginBottom: '1.5rem', color: 'var(--text-primary)', borderBottom: '1px solid #e2e8f0', paddingBottom: '0.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            Logo Configuration
+            {!isEditingGlobal && (
+              <button type="button" onClick={() => setIsEditingGlobal(true)} style={{ background: '#f1f5f9', border: '1px solid #cbd5e1', padding: '0.4rem 1rem', borderRadius: '6px', cursor: 'pointer', fontSize: '0.9rem', color: '#475569', fontWeight: '600' }}>
+                Edit Settings
+              </button>
+            )}
+          </h3>
           
           <div className="form-group" style={{ marginBottom: '2rem' }}>
             <label style={{ display: 'block', marginBottom: '0.8rem', fontWeight: '600', color: 'var(--text-secondary)' }}>Website Logo</label>
             <div style={{ display: 'flex', gap: '2rem', alignItems: 'flex-start' }}>
               <div style={{ width: '150px', height: '150px', border: '2px dashed #cbd5e1', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#f8fafc', overflow: 'hidden' }}>
-                {imagePreview ? (
-                  <img src={imagePreview} alt="Logo Preview" style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }} />
-                ) : (
-                  <span style={{ color: '#94a3b8', fontSize: '0.9rem' }}>No Logo</span>
-                )}
+                {renderLogoPreview()}
               </div>
-              <div style={{ flex: 1 }}>
+              {isEditingGlobal && (
+                <div style={{ flex: 1 }}>
                 <input 
                   type="file" 
                   id="logo-upload"
@@ -142,6 +219,7 @@ const GlobalSettings = () => {
                 </label>
                 <p style={{ fontSize: '0.8rem', color: '#94a3b8', marginTop: '0.5rem' }}>Recommended size: 200x60 pixels. Max size: 2MB.</p>
               </div>
+              )}
             </div>
           </div>
 
@@ -155,7 +233,8 @@ const GlobalSettings = () => {
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               placeholder="e.g., 917200407943"
-              style={{ width: '100%', padding: '0.8rem', borderRadius: '8px', border: '1px solid #cbd5e1' }}
+              style={{ width: '100%', padding: '0.8rem', borderRadius: '8px', border: '1px solid #cbd5e1', backgroundColor: isEditingGlobal ? '#fff' : '#f8fafc', color: isEditingGlobal ? 'inherit' : '#64748b' }}
+              disabled={!isEditingGlobal}
               required
             />
           </div>
@@ -168,21 +247,131 @@ const GlobalSettings = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="e.g., faabusinessgroup@gmail.com"
-              style={{ width: '100%', padding: '0.8rem', borderRadius: '8px', border: '1px solid #cbd5e1' }}
+              style={{ width: '100%', padding: '0.8rem', borderRadius: '8px', border: '1px solid #cbd5e1', backgroundColor: isEditingGlobal ? '#fff' : '#f8fafc', color: isEditingGlobal ? 'inherit' : '#64748b' }}
+              disabled={!isEditingGlobal}
               required
             />
           </div>
 
-          <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-            <button 
-              type="submit" 
-              disabled={loading}
-              style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'var(--accent-primary)', color: 'white', padding: '0.8rem 1.5rem', borderRadius: '8px', border: 'none', fontWeight: '600', cursor: loading ? 'not-allowed' : 'pointer', opacity: loading ? 0.7 : 1, transition: 'all 0.2s' }}
-            >
-              <Save size={18} />
-              {loading ? 'Saving...' : 'Save Settings'}
-            </button>
+          {isEditingGlobal && (
+            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '1rem' }}>
+              <button 
+                type="button" 
+                onClick={() => {
+                  setIsEditingGlobal(false);
+                  fetchSettings(); // reset values
+                }}
+                style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: '#f1f5f9', color: '#475569', padding: '0.8rem 1.5rem', borderRadius: '8px', border: '1px solid #cbd5e1', fontWeight: '600', cursor: 'pointer', transition: 'all 0.2s' }}
+              >
+                Cancel
+              </button>
+              <button 
+                type="submit" 
+                disabled={loadingGlobal}
+                style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'var(--accent-primary)', color: 'white', padding: '0.8rem 1.5rem', borderRadius: '8px', border: 'none', fontWeight: '600', cursor: loadingGlobal ? 'not-allowed' : 'pointer', opacity: loadingGlobal ? 0.7 : 1, transition: 'all 0.2s' }}
+              >
+                <Save size={18} />
+                {loadingGlobal ? 'Saving...' : 'Save Settings'}
+              </button>
+            </div>
+          )}
+        </form>
+
+        <form onSubmit={handleProfileSubmit} style={{ background: '#fff', padding: '2rem', borderRadius: '12px', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)' }}>
+          <h3 style={{ marginBottom: '1.5rem', color: 'var(--text-primary)', borderBottom: '1px solid #e2e8f0', paddingBottom: '0.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            Admin Profile Credentials
+            {!isEditingProfile && (
+              <button type="button" onClick={() => setIsEditingProfile(true)} style={{ background: '#f1f5f9', border: '1px solid #cbd5e1', padding: '0.4rem 1rem', borderRadius: '6px', cursor: 'pointer', fontSize: '0.9rem', color: '#475569', fontWeight: '600' }}>
+                Edit Profile
+              </button>
+            )}
+          </h3>
+          <p style={{ color: '#64748b', fontSize: '0.9rem', marginBottom: '1.5rem' }}>Update your personal login email, display name, and password here.</p>
+
+          <div className="form-group" style={{ marginBottom: '1.5rem' }}>
+            <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '600', color: 'var(--text-secondary)' }}>Display Name</label>
+            <input 
+              type="text" 
+              className="modern-input"
+              value={adminName}
+              onChange={(e) => setAdminName(e.target.value)}
+              placeholder="e.g., Admin User"
+              style={{ width: '100%', padding: '0.8rem', borderRadius: '8px', border: '1px solid #cbd5e1', backgroundColor: isEditingProfile ? '#fff' : '#f8fafc', color: isEditingProfile ? 'inherit' : '#64748b' }}
+              disabled={!isEditingProfile}
+              required
+            />
           </div>
+
+          <div className="form-group" style={{ marginBottom: '1.5rem' }}>
+            <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '600', color: 'var(--text-secondary)' }}>Login Email</label>
+            <input 
+              type="email" 
+              className="modern-input"
+              value={adminEmail}
+              onChange={(e) => setAdminEmail(e.target.value)}
+              placeholder="admin@example.com"
+              style={{ width: '100%', padding: '0.8rem', borderRadius: '8px', border: '1px solid #cbd5e1', backgroundColor: isEditingProfile ? '#fff' : '#f8fafc', color: isEditingProfile ? 'inherit' : '#64748b' }}
+              disabled={!isEditingProfile}
+              required
+            />
+          </div>
+
+          <div className="form-group" style={{ marginBottom: '1.5rem' }}>
+            <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '600', color: 'var(--text-secondary)' }}>Personal Phone Number (Optional)</label>
+            <input 
+              type="text" 
+              className="modern-input"
+              value={adminPhone}
+              onChange={(e) => setAdminPhone(e.target.value)}
+              placeholder="e.g., 919876543210"
+              style={{ width: '100%', padding: '0.8rem', borderRadius: '8px', border: '1px solid #cbd5e1', backgroundColor: isEditingProfile ? '#fff' : '#f8fafc', color: isEditingProfile ? 'inherit' : '#64748b' }}
+              disabled={!isEditingProfile}
+            />
+          </div>
+
+          <div className="form-group" style={{ marginBottom: '2rem' }}>
+            <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '600', color: 'var(--text-secondary)' }}>New Password</label>
+            <input 
+              type="password" 
+              className="modern-input"
+              value={adminPassword}
+              onChange={(e) => setAdminPassword(e.target.value)}
+              placeholder="Leave blank to keep current password"
+              style={{ width: '100%', padding: '0.8rem', borderRadius: '8px', border: '1px solid #cbd5e1', backgroundColor: isEditingProfile ? '#fff' : '#f8fafc', color: isEditingProfile ? 'inherit' : '#64748b' }}
+              disabled={!isEditingProfile}
+            />
+          </div>
+
+          {isEditingProfile && (
+            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '1rem' }}>
+              <button 
+                type="button" 
+                onClick={() => {
+                  setIsEditingProfile(false);
+                  // Reset from local storage
+                  const userInfoStr = localStorage.getItem('userInfo') || sessionStorage.getItem('userInfo');
+                  if (userInfoStr) {
+                    try {
+                      const userInfo = JSON.parse(userInfoStr);
+                      setAdminName(userInfo.name || '');
+                      setAdminEmail(userInfo.email || '');
+                    } catch (err) {}
+                  }
+                }}
+                style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: '#f1f5f9', color: '#475569', padding: '0.8rem 1.5rem', borderRadius: '8px', border: '1px solid #cbd5e1', fontWeight: '600', cursor: 'pointer', transition: 'all 0.2s' }}
+              >
+                Cancel
+              </button>
+              <button 
+                type="submit" 
+                disabled={loadingProfile}
+                style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: '#3b82f6', color: 'white', padding: '0.8rem 1.5rem', borderRadius: '8px', border: 'none', fontWeight: '600', cursor: loadingProfile ? 'not-allowed' : 'pointer', opacity: loadingProfile ? 0.7 : 1, transition: 'all 0.2s' }}
+              >
+                <Save size={18} />
+                {loadingProfile ? 'Saving...' : 'Update Profile'}
+              </button>
+            </div>
+          )}
         </form>
       </div>
     </div>
