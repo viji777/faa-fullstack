@@ -9,6 +9,10 @@ const Orders = () => {
   const [loading, setLoading] = useState(true);
   const [selectedOrder, setSelectedOrder] = useState(null);
   
+  // Shipment Reference Edit State
+  const [editingReference, setEditingReference] = useState(false);
+  const [newReference, setNewReference] = useState('');
+  
   // Filter States
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
@@ -90,6 +94,27 @@ const Orders = () => {
       }, getAuthHeaders());
       
       toast.success('Order status updated');
+      fetchOrders();
+    } catch (error) {
+      toast.error(error.response?.data?.message || 'Update failed');
+    }
+  };
+
+  const handleUpdateReference = async () => {
+    if (!selectedOrder) return;
+    try {
+      await axios.put(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/orders/${selectedOrder._id}/status`, { 
+        status: selectedOrder.status,
+        shipmentReference: newReference
+      }, getAuthHeaders());
+      
+      toast.success('Shipment Reference updated successfully');
+      setEditingReference(false);
+      
+      // Update selected order locally
+      setSelectedOrder(prev => ({ ...prev, shipmentReference: newReference }));
+      
+      // Refresh list
       fetchOrders();
     } catch (error) {
       toast.error(error.response?.data?.message || 'Update failed');
@@ -313,14 +338,50 @@ const Orders = () => {
                 </div>
               </div>
               
-              {selectedOrder.shipmentReference && (
-                <div>
-                  <h4 style={{ color: 'var(--accent-primary)', marginBottom: '0.5rem' }}>Shipment Reference</h4>
-                  <div style={{ background: '#f8fafc', padding: '1rem', borderRadius: '8px' }}>
-                    <strong>{selectedOrder.shipmentReference}</strong>
-                  </div>
+              <div>
+                <h4 style={{ color: 'var(--accent-primary)', marginBottom: '0.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  Shipment Reference
+                  {!editingReference ? (
+                    <button 
+                      onClick={() => {
+                        setNewReference(selectedOrder.shipmentReference || '');
+                        setEditingReference(true);
+                      }} 
+                      style={{ fontSize: '0.8rem', background: '#f1f5f9', border: '1px solid #cbd5e1', padding: '0.2rem 0.5rem', borderRadius: '4px', cursor: 'pointer', color: 'var(--accent-primary)' }}
+                    >
+                      {selectedOrder.shipmentReference ? 'Edit' : 'Add Reference'}
+                    </button>
+                  ) : null}
+                </h4>
+                <div style={{ background: '#f8fafc', padding: '1rem', borderRadius: '8px' }}>
+                  {!editingReference ? (
+                    <strong>{selectedOrder.shipmentReference || <span style={{ color: '#94a3b8', fontWeight: 'normal' }}>Not set</span>}</strong>
+                  ) : (
+                    <div style={{ display: 'flex', gap: '0.5rem' }}>
+                      <input 
+                        type="text" 
+                        value={newReference}
+                        onChange={(e) => setNewReference(e.target.value)}
+                        className="modern-input"
+                        placeholder="e.g., ST Courier, 4545..."
+                        style={{ flex: 1, padding: '0.5rem', borderRadius: '6px', border: '1px solid #cbd5e1' }}
+                      />
+                      <button 
+                        onClick={handleUpdateReference}
+                        style={{ background: 'var(--accent-primary)', color: 'white', border: 'none', padding: '0.5rem 1rem', borderRadius: '6px', cursor: 'pointer' }}
+                      >
+                        Save
+                      </button>
+                      <button 
+                        onClick={() => setEditingReference(false)}
+                        style={{ background: '#f1f5f9', color: '#475569', border: '1px solid #cbd5e1', padding: '0.5rem 1rem', borderRadius: '6px', cursor: 'pointer' }}
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  )}
                 </div>
-              )}
+              </div>
               
               <div>
                 <h4 style={{ color: 'var(--accent-primary)', marginBottom: '0.5rem' }}>Order Items</h4>
