@@ -1242,6 +1242,7 @@
   flex: 1;
   display: flex;
   flex-direction: column;
+  min-width: 0;
 }
 
 .contactCardTitle {
@@ -1249,6 +1250,8 @@
   color: #0f291e;
   font-size: 1.1rem;
   margin-bottom: 0.2rem;
+  word-break: break-word;
+  overflow-wrap: anywhere;
 }
 
 .contactCardDesc {
