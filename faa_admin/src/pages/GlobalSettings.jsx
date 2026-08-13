@@ -215,7 +215,7 @@ const GlobalSettings = () => {
                 />
                 <label htmlFor="logo-upload" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: '#f1f5f9', padding: '0.6rem 1.2rem', borderRadius: '8px', cursor: 'pointer', fontWeight: '600', color: '#475569', border: '1px solid #e2e8f0', transition: 'all 0.2s' }}>
                   <Upload size={18} />
-                  Choose New Logo
+                  Upload Logo
                 </label>
                 <p style={{ fontSize: '0.8rem', color: '#94a3b8', marginTop: '0.5rem' }}>Recommended size: 200x60 pixels. Max size: 2MB.</p>
               </div>
