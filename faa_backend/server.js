@@ -64,6 +64,7 @@ const bannerRoutes = require('./routes/bannerRoutes');
 const dashboardRoutes = require('./routes/dashboardRoutes');
 const uploadRoutes = require('./routes/uploadRoutes');
 const contactRoutes = require('./routes/contactRoutes');
+const settingsRoutes = require('./routes/settingsRoutes');
 // Basic route
 app.get('/', (req, res) => {
   res.send('Faa Nuts and Dates Backend API is running');
@@ -81,6 +82,7 @@ app.use('/api/banners', bannerRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/upload', uploadRoutes);
 app.use('/api/contact', contactRoutes);
+app.use('/api/settings', settingsRoutes);
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

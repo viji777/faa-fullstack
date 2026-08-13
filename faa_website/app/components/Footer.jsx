@@ -1,8 +1,10 @@
 import React from 'react';
 import Link from 'next/link';
+import { useSettings } from '../context/SettingsContext';
 import styles from './Footer.module.css';
 
 const Footer = () => {
+  const settings = useSettings();
   return (
     <footer className={styles.footer}>
       <div className={styles.curveDivider}>
@@ -14,7 +16,7 @@ const Footer = () => {
         <div className={styles.grid}>
           <div className={styles.brand}>
             <Link href="/" className={styles.logo}>
-              <img src="/faa_logo.png" alt="Faa Nuts & Dates" className={styles.logoImg} />
+              <img src={settings.logoUrl} alt="Faa Nuts & Dates" className={styles.logoImg} />
             </Link>
             <p className={styles.description}>
               Discover the finest selection of premium nuts, dates, and dry fruits. Sourced globally, delivered fresh to your doorstep. Experience health and luxury in every bite.
@@ -35,10 +37,10 @@ const Footer = () => {
           <div className={styles.contactColumn}>
             <h4 className={styles.heading}>Contact Us</h4>
             <div className={styles.contactItem}>
-              <strong>Email:</strong> faabusinessgroup@gmail.com
+              <strong>Email:</strong> {settings.email}
             </div>
             <div className={styles.contactItem}>
-              <strong>Phone:</strong> +91 72004 07943
+              <strong>Phone:</strong> +{settings.phone}
             </div>
             <div className={styles.contactItem}>
               <strong>Address:</strong> 18/1, Ayyanarpuram 3rd Street, Sekkalai Road (Water Tank area), Karaikudi, Tamil Nadu

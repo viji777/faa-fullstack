@@ -23,6 +23,7 @@ const Layout = () => {
     { name: 'Orders', path: '/orders', icon: <ShoppingCart size={20} color="#3b82f6" /> },
     { name: 'Staffs', path: '/staffs', icon: <Shield size={20} color="#8b5cf6" /> },
     { name: 'Customers', path: '/customers', icon: <Users size={20} color="#14b8a6" /> },
+    { name: 'Settings', path: '/settings', icon: <Settings size={20} color="#f43f5e" /> },
   ];
 
   return (

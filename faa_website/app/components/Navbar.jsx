@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import { Search, ShoppingBag, User, X, Phone, Mail, Leaf, ChevronDown, LogOut, Menu } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
+import { useSettings } from '../context/SettingsContext';
 import styles from './Navbar.module.css';
 
 const FacebookIcon = ({ size = 24, ...props }) => (
@@ -38,6 +39,7 @@ const Navbar = () => {
   
   const { user, setAuthModalOpen, logout } = useAuth();
   const { cartCount, setIsCartOpen } = useCart();
+  const settings = useSettings();
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
@@ -61,22 +63,22 @@ const Navbar = () => {
             <Leaf className={styles.topIcon} size={14} /> 
             <span>Premium Quality Nuts & Dates, Handpicked for You</span>
           </div>
-          <a href="tel:+917200407943" className={styles.topContact} style={{ textDecoration: 'none', color: 'inherit' }}>
+          <a href={`tel:+${settings.phone}`} className={styles.topContact} style={{ textDecoration: 'none', color: 'inherit' }}>
             <Phone size={14} className={styles.topIcon} />
-            <span>+91 72004 07943</span>
+            <span>+{settings.phone}</span>
           </a>
           <div className={styles.topSocials}>
             <span className={styles.followText}>Follow us :</span>
             <a href="#" aria-label="Facebook"><FacebookIcon size={16} /></a>
             <a href="https://www.instagram.com/faa_nuts_and_hampers/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><InstagramIcon size={16} /></a>
-            <a href="https://wa.me/917200407943" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><WhatsappIcon size={16} /></a>
+            <a href={`https://wa.me/${settings.phone}`} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><WhatsappIcon size={16} /></a>
           </div>
         </div>
       </div>
       <nav className={styles.navbar}>
       <div className={styles.container}>
         <Link href="/" className={styles.logo}>
-          <img src="/faa_logo.png" alt="Faa Nuts & Dates" className={styles.logoImg} />
+          <img src={settings.logoUrl} alt="Faa Nuts & Dates" className={styles.logoImg} />
           <span className={styles.logoText}>Faa Nuts</span>
         </Link>
         

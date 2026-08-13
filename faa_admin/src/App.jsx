@@ -13,6 +13,7 @@ import Products from './pages/Products';
 import Orders from './pages/Orders';
 import Staffs from './pages/Staffs';
 import Customers from './pages/Customers';
+import GlobalSettings from './pages/GlobalSettings';
 
 // Protected Route Wrapper
 const ProtectedRoute = ({ children }) => {
@@ -50,6 +51,7 @@ function App() {
             <Route path="orders" element={<Orders />} />
             <Route path="staffs" element={<Staffs />} />
             <Route path="customers" element={<Customers />} />
+            <Route path="settings" element={<GlobalSettings />} />
           </Route>
         </Routes>
       </Router>

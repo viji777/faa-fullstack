@@ -1,6 +1,7 @@
 const Order = require('../models/Order');
 const Cart = require('../models/Cart');
 const User = require('../models/User');
+const Settings = require('../models/Settings');
 
 // @desc    Place a new order (Generates WhatsApp Link)
 // @route   POST /api/orders
@@ -72,7 +73,8 @@ exports.placeOrder = async (req, res) => {
 
 
     // 6. Generate Multi-Line WhatsApp Message
-    const adminPhone = '917200407943';
+    const settings = await Settings.findOne() || { phone: '917200407943' };
+    const adminPhone = settings.phone;
     
     // Formatting Address cleanly into multiple lines
     let formattedAddress = `${shippingAddress.name}\n${shippingAddress.addressLine1}`;
