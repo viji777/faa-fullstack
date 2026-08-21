@@ -114,6 +114,7 @@ const GlobalSettings = () => {
       }, getAuthHeaders());
       
       toast.success('Settings updated successfully!');
+      setImageFile(null);
       fetchSettings();
       setIsEditingGlobal(false);
     } catch (error) {
@@ -259,6 +260,7 @@ const GlobalSettings = () => {
                 type="button" 
                 onClick={() => {
                   setIsEditingGlobal(false);
+                  setImageFile(null);
                   fetchSettings(); // reset values
                 }}
                 style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: '#f1f5f9', color: '#475569', padding: '0.8rem 1.5rem', borderRadius: '8px', border: '1px solid #cbd5e1', fontWeight: '600', cursor: 'pointer', transition: 'all 0.2s' }}

@@ -28,6 +28,7 @@ export default function HomePageClient({ initialBanners = [], initialCategories 
   const [contactStatus, setContactStatus] = useState('');
   const [isSubmittingContact, setIsSubmittingContact] = useState(false);
   const router = useRouter();
+  const settings = useSettings();
 
   const handleContactSubmit = async (e) => {
     e.preventDefault();

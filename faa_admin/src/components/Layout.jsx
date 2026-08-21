@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
 import { LayoutDashboard, ShoppingCart, Users, Package, Settings, LogOut, Bell, Search, Image, Grid, Shield } from 'lucide-react';
 import './Layout.css';
@@ -6,6 +7,21 @@ import './Layout.css';
 const Layout = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const [logoUrl, setLogoUrl] = useState('');
+
+  useEffect(() => {
+    const fetchSettings = async () => {
+      try {
+        const res = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/settings`);
+        if (res.data && res.data.logoUrl) {
+          setLogoUrl(res.data.logoUrl);
+        }
+      } catch (err) {
+        console.error('Failed to fetch settings logo', err);
+      }
+    };
+    fetchSettings();
+  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -31,7 +47,11 @@ const Layout = () => {
       {/* Sidebar */}
       <aside className="sidebar">
         <div className="sidebar-logo">
-          <div className="logo-icon">F</div>
+          {logoUrl ? (
+            <img src={logoUrl} alt="Logo" style={{ width: '32px', height: '32px', objectFit: 'contain' }} />
+          ) : (
+            <div className="logo-icon">F</div>
+          )}
           <h2>Faa Admin</h2>
         </div>
         

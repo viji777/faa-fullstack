@@ -187,7 +187,10 @@ const Navbar = () => {
       {/* Mobile Menu Overlay */}
       <div className={`${styles.mobileMenuOverlay} ${isMobileMenuOpen ? styles.mobileMenuOpen : ''}`}>
         <div className={styles.mobileMenuHeader}>
-          <span className={styles.logoText}>Faa Nuts</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <img src={settings.logoUrl} alt="Faa Nuts & Dates" className={styles.logoImg} />
+            <span className={styles.logoText}>Faa Nuts</span>
+          </div>
           <button className={styles.closeBtn} onClick={() => setIsMobileMenuOpen(false)}>
             <X size={28} />
           </button>
